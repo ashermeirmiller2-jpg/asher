@@ -1,0 +1,31 @@
+{
+  "summary": "Frontend regression for Munchy's Grill iteration 2 (reordered Home + sticky pill menu nav + floating cart pill + Apple-style BurgerScrollScene). Tested on public REACT_APP_BACKEND_URL. All 12 requested scenarios verified via Playwright on desktop 1920x1080. Zero page errors, zero console errors during full scroll-through. The previous 'Offsets must be monotonically non-decreasing' Web Animations API error is GONE (new stacked-opacity layer approach works). Section order confirmed correct: Hero -> MenuBento -> FeaturedRail -> StorySection -> VisitSection -> BurgerScrollScene -> Footer (menu offset 1835 < burger-scroll-scene offset 17136). Sticky menu-nav pill click (menu-nav-burgers) scrolls target category to ~200px from top (cleared 88px glass nav). menu-search-input filters correctly: 'shawarma' yields counts Starters:0, Burgers:0, Baguettes:0, Shawarma&Falafel:2, Wraps:0, Salads:0, Platters:1 (Chicken Shawarma Platter legitimately matches). Shnitzel Baguette item modal opens, Add to Cart triggers floating-cart-pill (bottom-center) showing '1 item' and '$19.58'. Click floating pill opens cart sheet. Continue to Checkout opens CheckoutForm; submit via checkout-submit-btn creates order visible in /admin (#E5E56D45 TEST Buyer, ASAP, $19.58, Preparing). /admin page loads and lists 3 orders with status selects. BurgerScrollScene: all 4 chapter captions ('Eight ounces.', 'Charcoal-grilled.', 'Toasted bun.', 'Yours, in ten.') render at their scroll ranges and the .will-change-transform burger element produces 3 distinct transform values across scroll positions (rotate + scale + y). burger-scene-order-btn click scrolls back to menu.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_backend_api.py (from iteration 1 - backend unchanged, not re-run per request)",
+    "/app/test_reports/pytest/pytest_results.xml (from iteration 1)"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Minor: MenuBento scroll-spy attaches a scroll listener that runs CATEGORIES.forEach(getBoundingClientRect) on every scroll event. On a 420vh BurgerScrollScene page this fires a lot. Consider rAF-throttling or using IntersectionObserver for better perf on mid-tier phones.",
+    "Minor: MenuBento.jsx hardcodes 'String(8).padStart(2,0)' for the total category count instead of CATEGORIES.length - if a category is added/removed the numbering display breaks silently.",
+    "Minor: Search input is hidden on mobile (hidden md:flex). There's no mobile alternative, so phone users cannot search the menu.",
+    "Minor: FloatingCartPill does not have a close/X button - only 'View' opens the sheet. Users who accidentally add may want a quick dismiss. Not critical.",
+    "Minor (carry-over from iter 1): data-testid='nav-cart-badge' is still duplicated in DOM because FlyToCart animates a clone."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "not re-tested (unchanged)", "frontend": "100% of iteration-2 scenarios"},
+  "test_credentials": "None required",
+  "seed_data_creation": "Created 1 test order during run: TEST Buyer / 555-111-2222 / $19.58 (visible at /admin)",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "For frontend regression run headless Chromium 1920x1080 against REACT_APP_BACKEND_URL. Key testids: home-page, menu-section, menu-sticky-nav, menu-nav-{id} (starters/burgers/baguettes/shawarma/wraps/salads/platters), menu-cat-{id}, menu-search-input, menu-item-{id}, floating-cart-pill, floating-cart-count, floating-cart-total, burger-scroll-scene, burger-scene-order-btn, checkout-submit-btn. BurgerScrollScene section is 420vh tall; to sample transforms scroll to bounding-rect top + height*[0.1, 0.5, 0.9]. Chapter ranges in code: [0.02,0.22], [0.27,0.47], [0.52,0.72], [0.77,0.95]. No 'Offsets' errors expected anymore - opacity cross-fade is used instead of color-string interpolation."
+}

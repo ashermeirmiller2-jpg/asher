@@ -39,7 +39,7 @@ export default function VisitSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, delay: 0.1 }}
-            className="md:col-span-7 rounded-[28px] overflow-hidden bg-bone aspect-[16/11] md:aspect-auto md:h-[520px]"
+            className="md:col-span-7 rounded-[28px] overflow-hidden bg-bone aspect-[4/3] md:aspect-auto md:h-[480px]"
             data-testid="visit-map"
           >
             <iframe

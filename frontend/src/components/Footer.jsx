@@ -50,12 +50,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="select-none pointer-events-none">
+        <div className="select-none pointer-events-none mt-4 md:mt-6">
           <p
-            className="font-display leading-none tracking-[-0.04em] text-ivory/95"
-            style={{ fontSize: "clamp(72px, 22vw, 320px)" }}
+            className="font-display leading-none tracking-[-0.04em] text-ivory/85"
+            style={{ fontSize: "clamp(48px, 9vw, 128px)" }}
           >
-            Munchy<span className="italic">'s</span>
+            Munchy<span className="italic text-munchy">'s</span>
           </p>
         </div>
 
