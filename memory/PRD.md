@@ -28,25 +28,26 @@ Merge the public Munchy's Grill marketing site and its Toast Tab online ordering
 - No emojis. Apple geometry + glassmorphism. Premium typography (Instrument Serif + Geist).
 
 ## What's Been Implemented (2026-04-30)
-- Design system: warm ivory bg + charcoal fg + Munchy's red accent + gold; CSS HSL vars; Instrument Serif (display) + Geist (body); glass utilities; grain texture; magnetic hover
+- Design system: warm ivory bg + charcoal fg + Munchy's red accent + sun yellow + gold + tomato + sage + plum + terracotta + teal accents; CSS HSL vars; Instrument Serif (display) + Geist (body); glass utilities; grain texture; magnetic hover
 - GlassNav: scroll-reactive shrinking glass pill with brand mark, Menu/Story/Visit, phone, Cart
-- HeroPinned: 170vh scroll-pinned hero with Toast CDN banner, parallax image scale, large Apple-style serif headline, scroll indicator
-- FeaturedRail: horizontal-scroll signature items rail with snap
+- HeroPinned: 170vh scroll-pinned hero with Toast CDN banner, parallax image scale, large Apple-style serif headline, warm-tinted overlay (red/yellow blend), sunrise-gradient "Order Now" CTA, scroll indicator
+- MenuBento (FIRST after hero): 8-category bento grid; sticky scroll-spy pill nav with per-category color dots and live search; image-fill cards with Bestseller/Spicy/Veg/Signature tags; per-category accent color tints heading and price chip border
+- FeaturedRail: horizontal-scroll signature items rail with snap (still present below menu)
 - StorySection: asymmetric split with floating "Open till 2:30 AM" glass card and stat row
-- MenuBento: 8-category bento grid with sticky scroll-driven category text-mask morph (the wow moment), image-fill cards with gradient + glass price chip
-- ItemModal: side-panel on desktop / bottom-sheet on mobile; option groups (single + multi with max enforcement); special instructions; quantity +/-; live total in CTA
-- CartSheet: bottom-sheet drawer with line items showing options + instructions, qty controls, remove, totals (subtotal, tax, 3% surcharge, total)
-- CheckoutForm: name/phone, ASAP or scheduled pickup, payment method (Toast handoff or cash), success screen with confirmation # and Toast deep-link
+- VisitSection: Google Maps embed (4:3 contained), address/phone/hours cards, working contact form
+- BurgerScrollScene: Apple iPhone product-page-style scroll animation. 420vh sticky-pinned section. Burger image circular-masked, rotates -30° → 380°, scales 0.7→1.35→1.05, with halo color cross-fade and chapter captions ("Eight ounces.", "Charcoal-grilled.", "Toasted bun.", "Yours, in ten.") that fade in/out. Final "Build your burger" CTA jumps back to menu. Replaces the previous static giant footer wordmark.
+- ItemModal: side-panel on desktop / bottom-sheet on mobile; option groups; special instructions; quantity +/-; live total in CTA
+- CartSheet: bottom-sheet drawer with line items, qty controls, totals
+- CheckoutForm: name/phone, ASAP or scheduled pickup, payment method, success screen with confirmation # and Toast deep-link
 - FlyToCart: image-flies-to-cart motion path on add
-- VisitSection: Google Maps embed, address/phone/hours cards, working contact form
-- Footer: dark charcoal with giant brand mark, surcharge disclosure
+- FloatingCartPill: bottom-center pill that shows count + total whenever cart has items, charcoal-to-munchy gradient, magnetic hover; replaces having to scroll to top to see cart
+- Footer: dark charcoal with smaller wordmark (giant version replaced by BurgerScrollScene), surcharge disclosure
 - Admin page: status filters, live polling (15s), order detail rendering, status select with PATCH
 - Backend: POST/GET /api/orders, GET /api/orders/{id}, PATCH /api/orders/{id}, POST/GET /api/contact
 
 ## Test Status
-- 100% backend (11/11 pytest cases — orders + contact CRUD, validation, sort, 404s, status enum, no _id leak)
-- 100% frontend E2E (hero, nav, menu open, item modal customize, add to cart, cart sheet, checkout submit, success screen, admin status update, contact form)
-- Iteration 1 report: `/app/test_reports/iteration_1.json`
+- Iteration 1 (2026-04-30): 100% backend (11/11 pytest), 100% frontend E2E (hero, item modal, cart, checkout, admin, contact). Report: `/app/test_reports/iteration_1.json`
+- Iteration 2 (2026-04-30): 100% frontend regression (reordered Home, sticky pill menu nav with scroll-spy + search, floating cart pill, BurgerScrollScene with all 4 chapters animating, no Web Animations API errors). Report: `/app/test_reports/iteration_2.json`
 
 ## Backlog (P0/P1/P2)
 - **P0**: Real Toast Partner API integration when restaurant supplies OAuth credentials (replace handoff with direct submission)
