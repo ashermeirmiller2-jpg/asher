@@ -27,6 +27,12 @@ module.exports = {
         charcoal: 'hsl(var(--charcoal))',
         munchy: 'hsl(var(--munchy-red))',
         gold: 'hsl(var(--gold))',
+        sun: 'hsl(var(--sun))',
+        tomato: 'hsl(var(--tomato))',
+        sage: 'hsl(var(--sage))',
+        plum: 'hsl(var(--plum))',
+        terracotta: 'hsl(var(--terracotta))',
+        teal: 'hsl(var(--teal))',
       },
       fontFamily: {
         display: ['"Instrument Serif"', 'Times New Roman', 'serif'],

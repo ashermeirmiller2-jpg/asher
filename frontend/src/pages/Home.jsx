@@ -10,6 +10,7 @@ import ItemModal from "@/components/ItemModal";
 import CartSheet from "@/components/CartSheet";
 import CheckoutForm from "@/components/CheckoutForm";
 import FlyToCart from "@/components/FlyToCart";
+import FloatingCartPill from "@/components/FloatingCartPill";
 
 export default function Home() {
   const [activeItem, setActiveItem] = useState(null);
@@ -28,6 +29,7 @@ export default function Home() {
       <CartSheet />
       <CheckoutForm />
       <FlyToCart />
+      <FloatingCartPill />
     </main>
   );
 }

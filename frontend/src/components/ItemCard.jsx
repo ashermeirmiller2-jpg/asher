@@ -3,8 +3,17 @@ import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
+const itemTags = (item) => {
+  const tags = [];
+  if (item.featured) tags.push({ label: "Bestseller", color: "munchy" });
+  if (item.options && item.options.includes("spice_level")) tags.push({ label: "Spicy", color: "tomato" });
+  if (item.id === "shnitzel-baguette") tags.push({ label: "Signature", color: "sun" });
+  return tags;
+};
+
 export default function ItemCard({ item, onClick, variant = "default" }) {
   const { addItem } = useCart();
+  const tags = itemTags(item);
 
   const handleQuickAdd = (e) => {
     e.stopPropagation();
@@ -42,6 +51,21 @@ export default function ItemCard({ item, onClick, variant = "default" }) {
 
         {/* Bottom gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+
+        {/* Top left tags */}
+        {tags.length > 0 && (
+          <div className="absolute top-4 left-4 flex flex-wrap gap-1.5 max-w-[60%]">
+            {tags.map((t) => (
+              <span
+                key={t.label}
+                className="rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-white font-body font-medium backdrop-blur-md"
+                style={{ backgroundColor: `hsl(var(--${t.color}) / 0.92)` }}
+              >
+                {t.label}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* Top right price tag */}
         <div className="absolute top-4 right-4 glass rounded-full px-3 py-1.5 text-[13px] font-mono-spaced text-charcoal">

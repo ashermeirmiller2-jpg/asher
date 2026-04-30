@@ -1,11 +1,23 @@
-import React, { useRef, useMemo } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef, useMemo, useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
+import { Search } from "lucide-react";
 import { CATEGORIES, MENU } from "@/data/menu";
-import ItemCard from "@/components/ItemCard";
+
+const itemTags = (item) => {
+  const tags = [];
+  if (item.featured) tags.push({ label: "Bestseller", color: "munchy" });
+  if (item.options && item.options.includes("spice_level")) tags.push({ label: "Spicy", color: "tomato" });
+  if (item.category === "salads" || item.id === "falafel-pita" || item.id === "falafel-10pc" || item.id === "hummus") {
+    tags.push({ label: "Veg", color: "sage" });
+  }
+  if (item.id === "shnitzel-baguette") tags.push({ label: "Signature", color: "sun" });
+  return tags;
+};
 
 export default function MenuBento({ onItemClick }) {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const [activeCat, setActiveCat] = useState(CATEGORIES[0].id);
+  const [query, setQuery] = useState("");
 
   const groupedByCategory = useMemo(() => {
     const out = {};
@@ -14,6 +26,46 @@ export default function MenuBento({ onItemClick }) {
     });
     return out;
   }, []);
+
+  const filteredByCategory = useMemo(() => {
+    if (!query.trim()) return groupedByCategory;
+    const q = query.toLowerCase();
+    const out = {};
+    CATEGORIES.forEach((c) => {
+      out[c.id] = groupedByCategory[c.id].filter(
+        (m) => m.name.toLowerCase().includes(q) || m.description.toLowerCase().includes(q)
+      );
+    });
+    return out;
+  }, [groupedByCategory, query]);
+
+  // Scroll-spy
+  useEffect(() => {
+    const handler = () => {
+      let current = CATEGORIES[0].id;
+      for (const c of CATEGORIES) {
+        const el = document.getElementById(`cat-${c.id}`);
+        if (el) {
+          const top = el.getBoundingClientRect().top;
+          if (top < 220) current = c.id;
+        }
+      }
+      setActiveCat(current);
+    };
+    handler();
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  const jumpTo = useCallback((id) => {
+    const el = document.getElementById(`cat-${id}`);
+    if (el) {
+      const offset = el.getBoundingClientRect().top + window.scrollY - 200;
+      window.scrollTo({ top: offset, behavior: "smooth" });
+    }
+  }, []);
+
+  const totalResults = Object.values(filteredByCategory).reduce((s, arr) => s + arr.length, 0);
 
   return (
     <section
@@ -29,7 +81,7 @@ export default function MenuBento({ onItemClick }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15%" }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-16 md:mb-24 max-w-3xl"
+          className="mb-10 md:mb-14 max-w-3xl"
         >
           <p className="text-charcoal/50 text-[11px] uppercase tracking-[0.32em] font-body mb-4">
             The Menu
@@ -44,71 +96,93 @@ export default function MenuBento({ onItemClick }) {
             Card orders carry a 3% surcharge per Toast policy.
           </p>
         </motion.div>
+      </div>
 
-        {/* Sticky category-morph headline (wow moment 10b) */}
-        <CategoryMorph progress={scrollYProgress} />
-
-        {/* Bento per category */}
-        <div className="space-y-28 md:space-y-40">
-          {CATEGORIES.map((cat, idx) => {
-            const items = groupedByCategory[cat.id];
-            return (
-              <CategoryBlock
-                key={cat.id}
-                cat={cat}
-                items={items}
-                index={idx}
-                onItemClick={onItemClick}
+      {/* STICKY pill nav + search */}
+      <div className="sticky top-[88px] z-30 mb-10 md:mb-14" data-testid="menu-sticky-nav">
+        <div className="px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="glass rounded-full px-3 py-2.5 flex items-center gap-2 shadow-[0_10px_40px_-20px_rgba(0,0,0,0.18)]">
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar flex-1">
+              {CATEGORIES.map((c) => {
+                const isActive = activeCat === c.id;
+                const count = filteredByCategory[c.id].length;
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => jumpTo(c.id)}
+                    data-testid={`menu-nav-${c.id}`}
+                    className={`flex-shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-body transition-all ${
+                      isActive
+                        ? "bg-charcoal text-ivory"
+                        : "text-charcoal/75 hover:bg-charcoal/8"
+                    }`}
+                    style={isActive ? { backgroundColor: c.hex, color: "#fff" } : undefined}
+                  >
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-ivory/90" : ""}`}
+                      style={!isActive ? { backgroundColor: c.hex } : undefined}
+                    />
+                    <span>{c.name}</span>
+                    <span className={`text-[10px] font-mono-spaced ${isActive ? "opacity-75" : "opacity-50"}`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="hidden md:flex items-center gap-2 px-3 border-l border-charcoal/10 ml-1">
+              <Search size={14} strokeWidth={1.75} className="text-charcoal/50" />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search dishes"
+                data-testid="menu-search-input"
+                className="bg-transparent outline-none text-sm font-body w-36 placeholder:text-charcoal/40"
               />
-            );
-          })}
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div className="px-6 md:px-12 max-w-7xl mx-auto">
+        {totalResults === 0 ? (
+          <div className="py-24 text-center">
+            <p className="font-display text-3xl md:text-5xl mb-3 text-balance">
+              Nothing matches "<span className="italic">{query}</span>".
+            </p>
+            <button
+              onClick={() => setQuery("")}
+              data-testid="menu-search-clear"
+              className="mt-4 inline-flex items-center rounded-full bg-charcoal text-ivory px-5 py-2.5 text-sm"
+            >
+              Clear search
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-24 md:space-y-32">
+            {CATEGORIES.map((cat, idx) => {
+              const items = filteredByCategory[cat.id];
+              if (items.length === 0) return null;
+              return (
+                <CategoryBlock
+                  key={cat.id}
+                  cat={cat}
+                  items={items}
+                  index={idx}
+                  onItemClick={onItemClick}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-function CategoryMorph({ progress }) {
-  // Maps scroll progress through 8 categories
-  const totalCats = CATEGORIES.length;
-  const activeIndex = useTransform(progress, (p) => {
-    const v = Math.min(Math.max(p, 0), 0.999);
-    return Math.floor(v * totalCats);
-  });
-
-  return (
-    <div className="sticky top-24 z-10 -mb-24 md:-mb-32 pointer-events-none">
-      <div className="overflow-hidden h-[68px] md:h-[88px] flex items-end">
-        <div className="flex flex-col">
-          {CATEGORIES.map((c, i) => (
-            <CategoryWord key={c.id} cat={c} index={i} activeIndex={activeIndex} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function CategoryWord({ cat, index, activeIndex }) {
-  const opacity = useTransform(activeIndex, (v) => (v === index ? 1 : 0.0));
-  const y = useTransform(activeIndex, (v) => `${(index - v) * 100}%`);
-
-  return (
-    <motion.div
-      style={{ opacity, y }}
-      className="absolute font-display text-[clamp(40px,7vw,84px)] tracking-[-0.02em] leading-none text-charcoal/85"
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <span className="italic font-light text-charcoal/40">{String(index + 1).padStart(2, "0")}</span>
-      <span className="ml-4">{cat.name}</span>
-    </motion.div>
-  );
-}
-
 function CategoryBlock({ cat, items, index, onItemClick }) {
-  // Bento layout based on count
   return (
-    <div data-testid={`menu-cat-${cat.id}`}>
+    <div id={`cat-${cat.id}`} data-testid={`menu-cat-${cat.id}`} className="scroll-mt-44">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -117,10 +191,19 @@ function CategoryBlock({ cat, items, index, onItemClick }) {
         className="flex items-end justify-between mb-8 md:mb-12"
       >
         <div>
-          <p className="text-charcoal/40 text-[10px] uppercase tracking-[0.32em] font-body mb-3 font-mono-spaced">
-            {String(index + 1).padStart(2, "0")} / {String(8).padStart(2, "0")}
-          </p>
-          <h3 className="font-display text-4xl md:text-6xl tracking-[-0.02em] leading-[0.95]">
+          <div className="flex items-center gap-3 mb-3">
+            <span
+              className="inline-block w-8 h-1 rounded-full"
+              style={{ backgroundColor: cat.hex }}
+            />
+            <p className="text-charcoal/45 text-[10px] uppercase tracking-[0.32em] font-body font-mono-spaced">
+              {String(index + 1).padStart(2, "0")} / {String(8).padStart(2, "0")}
+            </p>
+          </div>
+          <h3
+            className="font-display text-4xl md:text-6xl tracking-[-0.02em] leading-[0.95]"
+            style={{ color: cat.hex }}
+          >
             {cat.name}
           </h3>
           <p className="mt-2 text-charcoal/60 italic font-display text-xl md:text-2xl">{cat.tagline}</p>
@@ -130,19 +213,17 @@ function CategoryBlock({ cat, items, index, onItemClick }) {
         </span>
       </motion.div>
 
-      <BentoGrid items={items} onItemClick={onItemClick} />
+      <BentoGrid items={items} onItemClick={onItemClick} accent={cat.hex} />
     </div>
   );
 }
 
-function BentoGrid({ items, onItemClick }) {
-  // Asymmetric pattern: every 4 items mix of tall + wide
+function BentoGrid({ items, onItemClick, accent }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6 auto-rows-[180px] md:auto-rows-[220px]">
       {items.map((item, i) => {
-        // pattern: 0 = wide(3x2), 1 = tall(2x2), 2 = square(2x2), 3 = square(3x2)
-        let span = "col-span-1 md:col-span-2 row-span-2";
         const m = i % 6;
+        let span;
         if (m === 0) span = "col-span-2 md:col-span-3 row-span-2";
         else if (m === 1) span = "col-span-2 md:col-span-3 row-span-2";
         else if (m === 2) span = "col-span-1 md:col-span-2 row-span-2";
@@ -160,7 +241,7 @@ function BentoGrid({ items, onItemClick }) {
             className={span}
           >
             <div className="h-full">
-              <ItemCardFull item={item} onClick={() => onItemClick(item)} />
+              <ItemCardFull item={item} onClick={() => onItemClick(item)} accent={accent} />
             </div>
           </motion.div>
         );
@@ -169,7 +250,8 @@ function BentoGrid({ items, onItemClick }) {
   );
 }
 
-function ItemCardFull({ item, onClick }) {
+function ItemCardFull({ item, onClick, accent }) {
+  const tags = itemTags(item);
   return (
     <button
       type="button"
@@ -186,15 +268,41 @@ function ItemCardFull({ item, onClick }) {
         whileHover={{ scale: 1.06 }}
         transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
-      <div className="absolute top-3 right-3 glass rounded-full px-3 py-1 text-xs font-mono-spaced text-charcoal">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+
+      {/* Tags top-left */}
+      {tags.length > 0 && (
+        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[70%]">
+          {tags.map((t) => (
+            <span
+              key={t.label}
+              className="rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-white font-body font-medium backdrop-blur-md"
+              style={{ backgroundColor: `hsl(var(--${t.color}) / 0.92)` }}
+            >
+              {t.label}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Price chip top-right with category accent border */}
+      <div
+        className="absolute top-3 right-3 glass rounded-full px-3 py-1 text-xs font-mono-spaced text-charcoal border-2"
+        style={{ borderColor: accent }}
+      >
         ${item.price.toFixed(2)}
       </div>
+
+      {/* Hover affordance */}
+      <div className="absolute right-4 bottom-[88px] md:bottom-[100px] glass rounded-full px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-charcoal opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-body">
+        Customize
+      </div>
+
       <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
         <h4 className="font-display text-ivory text-xl md:text-2xl tracking-tight leading-tight text-balance">
           {item.name}
         </h4>
-        <p className="mt-1 text-ivory/70 text-xs md:text-sm font-body line-clamp-2 max-w-md">
+        <p className="mt-1 text-ivory/75 text-xs md:text-sm font-body line-clamp-2 max-w-md">
           {item.description}
         </p>
       </div>

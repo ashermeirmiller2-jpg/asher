@@ -42,11 +42,15 @@ export default function HeroPinned() {
           />
         </motion.div>
 
-        {/* Overlay */}
+        {/* Overlay - warm tinted */}
         <motion.div
           style={{ opacity: overlayOpacity }}
-          className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black"
-        />
+          className="absolute inset-0"
+          aria-hidden="true"
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-[#3a1a14]/55 to-[#1a0a06]/95" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#c72d3c]/0 via-transparent to-[#f8c42e]/15 mix-blend-overlay" />
+        </motion.div>
 
         {/* Grain */}
         <div className="absolute inset-0 grain pointer-events-none" />
@@ -102,7 +106,11 @@ export default function HeroPinned() {
                 <button
                   onClick={scrollToMenu}
                   data-testid="hero-order-btn"
-                  className="group inline-flex items-center gap-2 rounded-full bg-ivory text-charcoal px-7 py-3.5 font-body text-sm font-medium magnetic hover:-translate-y-0.5"
+                  className="group inline-flex items-center gap-2 rounded-full text-charcoal px-7 py-3.5 font-body text-sm font-medium magnetic hover:-translate-y-0.5 shadow-[0_15px_40px_-10px_rgba(248,196,46,0.6)]"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, hsl(var(--sun)) 0%, hsl(var(--gold)) 55%, hsl(var(--terracotta)) 100%)",
+                  }}
                 >
                   Order Now
                   <ArrowDown

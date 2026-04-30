@@ -46,14 +46,14 @@ export const TOPPING_GROUPS = {
 
 // 8 categories, ~40 items
 export const CATEGORIES = [
-  { id: "starters", name: "Starters", tagline: "How it begins." },
-  { id: "burgers", name: "Burgers", tagline: "Eight ounces. Hand-formed." },
-  { id: "baguettes", name: "Baguette Sandwiches", tagline: "Crust. Crunch. Conviction." },
-  { id: "shawarma", name: "Shawarma & Falafel", tagline: "Shaved. Stacked. Served." },
-  { id: "wraps", name: "Wraps", tagline: "Rolled. Ready." },
-  { id: "salads", name: "Salads", tagline: "Bowled over." },
-  { id: "platters", name: "Platters", tagline: "For the table." },
-  { id: "sides", name: "Sides", tagline: "The supporting cast." },
+  { id: "starters", name: "Starters", tagline: "How it begins.", color: "sun", hex: "#F8C42E" },
+  { id: "burgers", name: "Burgers", tagline: "Eight ounces. Hand-formed.", color: "tomato", hex: "#D9462A" },
+  { id: "baguettes", name: "Baguette Sandwiches", tagline: "Crust. Crunch. Conviction.", color: "munchy", hex: "#C72D3C" },
+  { id: "shawarma", name: "Shawarma & Falafel", tagline: "Shaved. Stacked. Served.", color: "terracotta", hex: "#D97552" },
+  { id: "wraps", name: "Wraps", tagline: "Rolled. Ready.", color: "gold", hex: "#C39046" },
+  { id: "salads", name: "Salads", tagline: "Bowled over.", color: "sage", hex: "#7C926A" },
+  { id: "platters", name: "Platters", tagline: "For the table.", color: "plum", hex: "#6E4988" },
+  { id: "sides", name: "Sides", tagline: "The supporting cast.", color: "teal", hex: "#388A85" },
 ];
 
 export const MENU = [
