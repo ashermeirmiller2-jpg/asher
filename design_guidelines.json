@@ -1,0 +1,116 @@
+{
+  "theme": "light",
+  "archetype": "4",
+  "archetype_description": "Swiss & High-Contrast (Apple-style geometry) mixed with warm organic colors of Munchy's Grill",
+  "colors": {
+    "background": "36 33% 93%",
+    "foreground": "0 0% 7%",
+    "primary": "355 78% 56%",
+    "primaryForeground": "0 0% 100%",
+    "secondary": "35 29% 88%",
+    "secondaryForeground": "0 0% 7%",
+    "muted": "38 26% 87%",
+    "mutedForeground": "0 0% 40%",
+    "accent": "45 87% 62%",
+    "accentForeground": "0 0% 7%",
+    "card": "0 0% 100%",
+    "cardForeground": "0 0% 7%",
+    "border": "35 20% 83%",
+    "input": "35 20% 83%",
+    "ring": "355 78% 56%",
+    "radius": "1rem",
+    "glass": "rgba(255, 255, 255, 0.7)",
+    "glassBorder": "rgba(255, 255, 255, 0.4)"
+  },
+  "typography": {
+    "fontFamily": {
+      "heading": "'Fraunces', serif",
+      "body": "'Outfit', sans-serif"
+    },
+    "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Outfit:wght@300;400;500;600&display=swap",
+    "scale": {
+      "h1": "text-5xl sm:text-6xl md:text-7xl tracking-tighter font-light",
+      "h2": "text-4xl sm:text-5xl tracking-tight font-light",
+      "h3": "text-2xl sm:text-3xl tracking-tight",
+      "h4": "text-xl sm:text-2xl font-medium",
+      "body": "text-base leading-relaxed",
+      "small": "text-sm uppercase tracking-[0.2em]"
+    }
+  },
+  "spacing": {
+    "section": "py-24 md:py-32",
+    "container": "px-6 md:px-12 max-w-7xl mx-auto",
+    "card": "p-6 md:p-8",
+    "gap": "gap-8 md:gap-12"
+  },
+  "components": {
+    "navbar": "glassmorphism, sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/40",
+    "button": "rounded-full px-6 py-3 font-medium transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:ring-2 focus:ring-offset-2",
+    "card": "bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-border/40",
+    "modal": "backdrop-blur-2xl bg-white/90 rounded-3xl border border-white/50 shadow-2xl",
+    "input": "rounded-xl border-border/40 bg-white px-4 py-3 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+  },
+  "animations": {
+    "scroll": "Use framer-motion for fade-in-up with 0.5s duration and 0.2s stagger on children. Sections should reveal smoothly as users scroll (Apple-style).",
+    "hover": "Magnetic hover on buttons, slight scale (1.02) on item cards. Nav links should have a subtle underline reveal.",
+    "parallax": "Use scroll-triggered slight y-axis transform for hero images and section backgrounds to create cinematic depth.",
+    "drawer": "Cart drawer slides in from the right with a spring physics (stiffness 300, damping 30), fading the background overlay."
+  },
+  "layout_blueprint": {
+    "hero": "Cinematic full-width image with dark gradient overlay at bottom. Large Fraunces headline, glassmorphism CTA card floating. Text aligned carefully to maintain optical balance.",
+    "featured_items": "Horizontal scroll or asymmetrical bento grid. Large imagery with minimalistic typography overlay.",
+    "full_menu_grid": "Apple-style bento grid for categories. Clean, rectangular cards for items with high-res food photography on top, content below. Explicitly NO EMOJIS in category names or descriptions.",
+    "item_modal": "Centered glassmorphism overlay. High-res item photo on top half (or left side on desktop), deep customization form (radio/checkboxes for toppings/sauces) on bottom/right.",
+    "cart_drawer": "Slide-in from right. Blur backdrop. Minimalist line-items. Sticky checkout button at the bottom.",
+    "about_story": "Asymmetric split layout. Large portrait photo on left, deep typography on right. Generous whitespace (p-24).",
+    "location_hours": "Clean text-based layout with a high-contrast map visual. Information hierarchically structured.",
+    "footer": "Dark charcoal background (foreground color), light cream text. Large brand mark at text-[10vw]. Massive padding (py-32)."
+  },
+  "media": [
+    {
+      "category": "hero_banner",
+      "url": "https://d2s742iet3d3t1.cloudfront.net/restaurant_service/restaurants/f48bb435-8bb1-45da-ad92-89dba53dd37b/Restaurant/d20713ba-0a50-4a65-bfea-de6af22f8ea6.jpg",
+      "description": "Toast CDN Munchys Grill banner"
+    },
+    {
+      "category": "logo",
+      "url": "https://www.munchysgrillny.com/assets/logo2-f258ddec.png",
+      "description": "Munchy's Grill official logo"
+    },
+    {
+      "category": "menu_schnitzel",
+      "url": "https://images.unsplash.com/photo-1587472957572-923973ca2926?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwxfHxzY2huaXR6ZWwlMjBzYW5kd2ljaHxlbnwwfHx8fDE3Nzc1MTI0MzN8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Schnitzel sandwich on tray"
+    },
+    {
+      "category": "menu_shawarma",
+      "url": "https://images.pexels.com/photos/29850814/pexels-photo-29850814.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Delicious falafel shawarma wrap with crispy fries served on a plate in Santa Monica."
+    },
+    {
+      "category": "menu_falafel",
+      "url": "https://images.pexels.com/photos/2373536/pexels-photo-2373536.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "A vibrant Middle Eastern dish with falafel, kebabs, tabbouleh on a plate."
+    },
+    {
+      "category": "menu_burger",
+      "url": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80",
+      "description": "High quality burger"
+    },
+    {
+      "category": "about_image",
+      "url": "https://images.unsplash.com/photo-1676716260600-217008b2e00a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTJ8MHwxfHNlYXJjaHwxfHx3YXJtJTIwcmVzdGF1cmFudCUyMGludGVyaW9yfGVufDB8fHx8MTc3NzUxMjQ1OHww&ixlib=rb-4.1.0&q=85",
+      "description": "Warm restaurant interior filled with tables and chairs"
+    }
+  ],
+  "instructions_to_main_agent": [
+    "Strictly avoid emojis in all text, titles, buttons, and descriptions.",
+    "Implement glassmorphism accents heavily on the nav, modal dialogs, and cart drawer using backdrop-blur and semi-transparent white backgrounds with a subtle border. NEVER use pure transparent backgrounds for overlays.",
+    "Ensure Apple-style geometric precision: crisp lines, perfect alignment, high-contrast typography sizes, and generous padding.",
+    "Implement scroll-triggered cinematic animations using framer-motion (fade-in, slide-up, magnetic hovers) across all major sections.",
+    "Merge the marketing site features (About, Location, Story) smoothly with the functional ordering features (Cart, Checkout, Customization).",
+    "Ensure all interactive elements have data-testid attributes.",
+    "Use standard semantic HTML elements combined with heavily customized Shadcn UI components for functional parts (Modals, Forms, Inputs).",
+    "Apply the HSL color variables correctly in Tailwind config and use them for the entire layout. The theme is Light, with warm ivory backgrounds and charcoal text."
+  ]
+}
