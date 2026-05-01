@@ -27,6 +27,15 @@ Merge the public Munchy's Grill marketing site and its Toast Tab online ordering
 - Working contact form
 - No emojis. Apple geometry + glassmorphism. Premium typography (Instrument Serif + Geist).
 
+## What's Been Implemented (2026-05-01 — Anti-AI-slop pass)
+- **Borders + glass overhaul**: rewrote `.glass` / `.glass-strong` / `.glass-dark` to be properly translucent (Apple-style 30–45% opacity, no thick whitewashed borders, inset 0.5px highlight only). Killed the colored `border-2` price chips on menu cards — replaced with new `.chip-dark` solid-dark glass pill. Reduced `.card-3d:hover` from aggressive `translateZ(40px)` tilt to subtle `translateY(-6px) rotateX(2deg)`.
+- **Hero rebuild**: switched from full-bleed pinned interior with floating serif (unreadable) to magazine-grade split layout — bold serif headline + Munchy red italic accent on the LEFT, real Munchy's interior banner on the RIGHT with editorial caption pill. Dropped the AI-poetry "Woodmere · NY · Est. 2018" eyebrow.
+- **Real logo in nav**: `GlassNav` now renders `RESTAURANT.logo` image instead of generic "M" circle.
+- **Killed gradient buttons**: every yellow→orange→terracotta gradient CTA replaced with solid `bg-munchy` red. Hero, BurgerScrollScene, all primary CTAs.
+- **Authentic copy pass**: dropped AI-rhythm taglines. "Every category, every craving" → "Everything we make, made to order"; "Eight things we get asked about most" → "The dishes people keep coming back for"; "Come hungry. Stay late." → "12 Irving Place, Woodmere"; story copy now reads like an actual NY kosher grill instead of a brand workshop.
+- **Real interior in StorySection**: swapped generic Unsplash interior for `RESTAURANT.banner` (actual Munchy's). Floating overlay card upgraded to dark chip.
+- **Image accuracy fixes**: replaced mismatched stock photos (Jalapeño Poppers showing noodles, Fried Pickles showing skewers) with verified Unsplash food photos.
+
 ## What's Been Implemented (2026-04-30)
 - Design system: warm ivory bg + charcoal fg + Munchy's red accent + sun yellow + gold + tomato + sage + plum + terracotta + teal accents; CSS HSL vars; Instrument Serif (display) + Geist (body); glass utilities; grain texture; magnetic hover
 - GlassNav: scroll-reactive shrinking glass pill with brand mark, Menu/Story/Visit, phone, Cart
@@ -48,6 +57,7 @@ Merge the public Munchy's Grill marketing site and its Toast Tab online ordering
 ## Test Status
 - Iteration 1 (2026-04-30): 100% backend (11/11 pytest), 100% frontend E2E (hero, item modal, cart, checkout, admin, contact). Report: `/app/test_reports/iteration_1.json`
 - Iteration 2 (2026-04-30): 100% frontend regression (reordered Home, sticky pill menu nav with scroll-spy + search, floating cart pill, BurgerScrollScene with all 4 chapters animating, no Web Animations API errors). Report: `/app/test_reports/iteration_2.json`
+- Iteration 3 (2026-05-01): 100% backend (11/11 pytest) + 100% frontend (10/10 review scenarios) post anti-AI-slop refactor. Confirmed `.chip-dark` price chips have 0px border + rgba(14,10,9,0.72) bg, no remaining yellow→orange gradient buttons, hero/cart/checkout/contact flows green. Report: `/app/test_reports/iteration_3.json`
 
 ## Backlog (P0/P1/P2)
 - **P0**: Real Toast Partner API integration when restaurant supplies OAuth credentials (replace handoff with direct submission)
