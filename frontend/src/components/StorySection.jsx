@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { RESTAURANT } from "@/data/menu";
 
 export default function StorySection() {
   return (
@@ -17,10 +18,10 @@ export default function StorySection() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="md:col-span-5 relative"
         >
-          <div className="aspect-[4/5] overflow-hidden rounded-[28px]">
+          <div className="aspect-[4/5] overflow-hidden rounded-[24px]">
             <img
-              src="https://images.unsplash.com/photo-1676716260600-217008b2e00a?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400"
-              alt="Inside Munchy's Grill"
+              src={RESTAURANT.banner}
+              alt="Inside Munchy's Grill, Woodmere"
               className="w-full h-full object-cover"
               draggable="false"
             />
@@ -30,10 +31,10 @@ export default function StorySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="absolute -bottom-6 -right-6 glass rounded-2xl px-5 py-4 max-w-[220px]"
+            className="absolute -bottom-5 -right-5 chip-dark rounded-2xl px-5 py-4 max-w-[230px]"
           >
-            <p className="font-display text-2xl leading-tight">Open till 2:30 AM</p>
-            <p className="text-charcoal/60 text-xs mt-1 font-body">Thursdays</p>
+            <p className="font-display text-2xl leading-tight text-ivory">Open till 2:30 AM</p>
+            <p className="text-ivory/65 text-xs mt-1 font-body">Thursday nights</p>
           </motion.div>
         </motion.div>
 
@@ -45,27 +46,26 @@ export default function StorySection() {
           className="md:col-span-7"
         >
           <p className="text-charcoal/50 text-[11px] uppercase tracking-[0.32em] font-body mb-6">
-            The Story
+            The story
           </p>
           <h2 className="font-display text-5xl md:text-7xl tracking-[-0.02em] leading-[0.96] text-balance">
-            A neighborhood grill,
+            A neighborhood grill
             <br />
-            <span className="italic">obsessively</span> made.
+            in <span className="italic text-munchy">Woodmere</span>.
           </h2>
           <div className="mt-8 md:mt-10 max-w-2xl space-y-5 text-charcoal/75 leading-relaxed font-body text-base md:text-lg">
             <p>
-              Munchy's started with one idea: kosher food shouldn't compromise.
-              Not on flavor, not on craft, not on the moment a baguette gets
-              pulled from the oven.
+              Munchy's opened on Irving Place in 2018 with one rule: kosher food
+              shouldn't compromise. Not on flavor, not on craft, not on the moment
+              the schnitzel comes out of the fryer.
             </p>
             <p>
-              We grind the beef. We bread the schnitzel. We marinate the
-              shawarma overnight and stack it on the spit ourselves. Every
-              sandwich, every burger, every wrap is built to order — exactly the
-              way you ask for it.
+              We grind the beef. We bread the schnitzel. We marinate the shawarma
+              overnight and stack it on the spit ourselves. Every sandwich, every
+              burger, every wrap is built when you order it.
             </p>
             <p>
-              Twelve Irving Place. Late hours. No shortcuts.
+              Twelve Irving Place. Late nights. No shortcuts.
             </p>
           </div>
 

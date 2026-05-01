@@ -87,13 +87,13 @@ export default function MenuBento({ onItemClick }) {
             The Menu
           </p>
           <h2 className="font-display text-5xl md:text-7xl tracking-[-0.02em] leading-[0.95] text-balance">
-            Every category,
+            Everything we make,
             <br />
-            <span className="italic">every craving.</span>
+            <span className="italic">made to order.</span>
           </h2>
-          <p className="mt-6 max-w-xl text-charcoal/70 leading-relaxed">
-            Tap any dish to customize toppings, sauces, and special requests.
-            Card orders carry a 3% surcharge per Toast policy.
+          <p className="mt-6 max-w-xl text-charcoal/65 leading-relaxed">
+            Tap a dish to pick toppings, sauces, and how you want it cooked. Card
+            orders carry a 3% surcharge — Toast policy, not ours.
           </p>
         </motion.div>
       </div>
@@ -101,7 +101,7 @@ export default function MenuBento({ onItemClick }) {
       {/* STICKY pill nav + search */}
       <div className="sticky top-[88px] z-30 mb-10 md:mb-14" data-testid="menu-sticky-nav">
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
-          <div className="glass rounded-full px-3 py-2.5 flex items-center gap-2 shadow-[0_10px_40px_-20px_rgba(0,0,0,0.18)]">
+          <div className="glass rounded-full px-3 py-2 flex items-center gap-2">
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar flex-1">
               {CATEGORIES.map((c) => {
                 const isActive = activeCat === c.id;
@@ -111,26 +111,26 @@ export default function MenuBento({ onItemClick }) {
                     key={c.id}
                     onClick={() => jumpTo(c.id)}
                     data-testid={`menu-nav-${c.id}`}
-                    className={`flex-shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-body transition-all ${
+                    className={`flex-shrink-0 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[13px] font-body transition-all ${
                       isActive
-                        ? "bg-charcoal text-ivory"
-                        : "text-charcoal/75 hover:bg-charcoal/8"
+                        ? "text-ivory"
+                        : "text-charcoal/70 hover:bg-charcoal/8"
                     }`}
-                    style={isActive ? { backgroundColor: c.hex, color: "#fff" } : undefined}
+                    style={isActive ? { backgroundColor: c.hex } : undefined}
                   >
                     <span
-                      className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-ivory/90" : ""}`}
+                      className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-ivory/80" : ""}`}
                       style={!isActive ? { backgroundColor: c.hex } : undefined}
                     />
                     <span>{c.name}</span>
-                    <span className={`text-[10px] font-mono-spaced ${isActive ? "opacity-75" : "opacity-50"}`}>
+                    <span className={`text-[10px] font-mono-spaced ${isActive ? "opacity-70" : "opacity-45"}`}>
                       {count}
                     </span>
                   </button>
                 );
               })}
             </div>
-            <div className="hidden md:flex items-center gap-2 px-3 border-l border-charcoal/10 ml-1">
+            <div className="hidden md:flex items-center gap-2 px-3 border-l hairline ml-1">
               <Search size={14} strokeWidth={1.75} className="text-charcoal/50" />
               <input
                 value={query}
@@ -206,19 +206,19 @@ function CategoryBlock({ cat, items, index, onItemClick }) {
           >
             {cat.name}
           </h3>
-          <p className="mt-2 text-charcoal/60 italic font-display text-xl md:text-2xl">{cat.tagline}</p>
+          <p className="mt-2 text-charcoal/55 italic font-display text-xl md:text-2xl">{cat.tagline}</p>
         </div>
         <span className="text-charcoal/40 text-sm font-mono-spaced hidden sm:block">
           {items.length} items
         </span>
       </motion.div>
 
-      <BentoGrid items={items} onItemClick={onItemClick} accent={cat.hex} />
+      <BentoGrid items={items} onItemClick={onItemClick} />
     </div>
   );
 }
 
-function BentoGrid({ items, onItemClick, accent }) {
+function BentoGrid({ items, onItemClick }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6 auto-rows-[180px] md:auto-rows-[220px]">
       {items.map((item, i) => {
@@ -241,7 +241,7 @@ function BentoGrid({ items, onItemClick, accent }) {
             className={span}
           >
             <div className="h-full">
-              <ItemCardFull item={item} onClick={() => onItemClick(item)} accent={accent} />
+              <ItemCardFull item={item} onClick={() => onItemClick(item)} />
             </div>
           </motion.div>
         );
@@ -250,7 +250,7 @@ function BentoGrid({ items, onItemClick, accent }) {
   );
 }
 
-function ItemCardFull({ item, onClick, accent }) {
+function ItemCardFull({ item, onClick }) {
   const tags = itemTags(item);
   return (
     <div className="card-3d-wrap h-full w-full">
@@ -258,18 +258,18 @@ function ItemCardFull({ item, onClick, accent }) {
         type="button"
         onClick={onClick}
         data-testid={`menu-item-${item.id}`}
-        className="card-3d group relative w-full h-full overflow-hidden rounded-[24px] md:rounded-[28px] bg-bone text-left"
+        className="card-3d group relative w-full h-full overflow-hidden rounded-[20px] md:rounded-[24px] bg-bone text-left"
         style={{
           boxShadow:
-            "0 2px 4px rgba(20,10,6,0.04), 0 12px 30px -18px rgba(20,10,6,0.22)",
+            "0 1px 2px rgba(20,10,6,0.04), 0 12px 28px -18px rgba(20,10,6,0.18)",
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.boxShadow =
-            "0 6px 10px rgba(20,10,6,0.08), 0 40px 60px -20px rgba(20,10,6,0.4), 0 80px 120px -40px rgba(20,10,6,0.3)";
+            "0 4px 8px rgba(20,10,6,0.06), 0 30px 50px -20px rgba(20,10,6,0.28)";
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.boxShadow =
-            "0 2px 4px rgba(20,10,6,0.04), 0 12px 30px -18px rgba(20,10,6,0.22)";
+            "0 1px 2px rgba(20,10,6,0.04), 0 12px 28px -18px rgba(20,10,6,0.18)";
         }}
       >
         <motion.img
@@ -278,23 +278,13 @@ function ItemCardFull({ item, onClick, accent }) {
           loading="lazy"
           draggable="false"
           className="absolute inset-0 w-full h-full object-cover"
-          whileHover={{ scale: 1.08 }}
+          whileHover={{ scale: 1.06 }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
 
         {/* Glass sheen on hover */}
-        <span className="card-3d-sheen rounded-[24px] md:rounded-[28px]" aria-hidden="true" />
-
-        {/* Inner top highlight */}
-        <span
-          className="absolute top-0 left-6 right-6 h-px pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)",
-          }}
-          aria-hidden="true"
-        />
+        <span className="card-3d-sheen rounded-[20px] md:rounded-[24px]" aria-hidden="true" />
 
         {/* Tags top-left */}
         {tags.length > 0 && (
@@ -302,8 +292,8 @@ function ItemCardFull({ item, onClick, accent }) {
             {tags.map((t) => (
               <span
                 key={t.label}
-                className="rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-white font-body font-medium backdrop-blur-md shadow-[0_4px_10px_-2px_rgba(0,0,0,0.4)]"
-                style={{ backgroundColor: `hsl(var(--${t.color}) / 0.92)` }}
+                className="rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-white font-body font-medium"
+                style={{ backgroundColor: `hsl(var(--${t.color}) / 0.95)` }}
               >
                 {t.label}
               </span>
@@ -311,16 +301,13 @@ function ItemCardFull({ item, onClick, accent }) {
           </div>
         )}
 
-        {/* Price chip top-right with category accent border */}
-        <div
-          className="absolute top-3 right-3 glass rounded-full px-3 py-1 text-xs font-mono-spaced text-charcoal border-2 z-[2]"
-          style={{ borderColor: accent }}
-        >
+        {/* Price chip top-right - solid dark, no colored border */}
+        <div className="absolute top-3 right-3 chip-dark rounded-full px-2.5 py-1 text-[11.5px] font-mono-spaced z-[2]">
           ${item.price.toFixed(2)}
         </div>
 
         {/* Hover affordance */}
-        <div className="absolute right-4 bottom-[88px] md:bottom-[100px] glass rounded-full px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-charcoal opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-body z-[2]">
+        <div className="absolute right-4 bottom-[88px] md:bottom-[100px] chip-dark rounded-full px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-body z-[2]">
           Customize
         </div>
 

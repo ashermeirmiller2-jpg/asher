@@ -36,47 +36,28 @@ export default function GlassNav() {
     >
       <div
         className={`mx-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          scrolled ? "mt-3 max-w-3xl" : "mt-5 max-w-6xl"
+          scrolled ? "mt-3 max-w-3xl" : "mt-5 max-w-5xl"
         } px-5`}
       >
         <div
-          className={`glass-strong rounded-full px-5 md:px-7 flex items-center justify-between transition-all duration-500 relative overflow-hidden ${
-            scrolled ? "py-2.5" : "py-3.5"
+          className={`glass rounded-full px-4 md:px-6 flex items-center justify-between transition-all duration-500 ${
+            scrolled ? "py-2" : "py-2.5"
           }`}
         >
-          {/* Top inner highlight - glass reflection */}
-          <span
-            className="absolute top-0 left-6 right-6 h-px pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent)",
-            }}
-            aria-hidden="true"
-          />
-
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             data-testid="nav-brand-btn"
-            className="relative flex items-center gap-3 group"
+            className="flex items-center gap-2.5 group"
           >
-            <span
-              className="relative inline-flex items-center justify-center w-9 h-9 rounded-full text-ivory font-display text-xl leading-none shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_6px_14px_-4px_rgba(0,0,0,0.4)]"
-              style={{
-                background:
-                  "radial-gradient(circle at 30% 30%, hsl(var(--charcoal)) 0%, #1a0f0c 100%)",
-              }}
-            >
-              <span className="relative z-10">M</span>
-              <span
-                className="absolute top-1 left-1.5 right-2 h-1.5 rounded-full opacity-70 blur-[1px]"
-                style={{
-                  background:
-                    "linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0))",
-                }}
-                aria-hidden="true"
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-charcoal overflow-hidden">
+              <img
+                src={RESTAURANT.logo}
+                alt="Munchy's"
+                className="w-7 h-7 object-contain"
+                draggable="false"
               />
             </span>
-            <span className="font-display text-[22px] tracking-[-0.01em] leading-none hidden sm:flex items-baseline">
+            <span className="font-display text-[20px] tracking-[-0.01em] leading-none hidden sm:flex items-baseline">
               <span className="text-charcoal">Munchy</span>
               <span className="italic text-munchy ml-[1px]">'s</span>
             </span>
@@ -88,7 +69,7 @@ export default function GlassNav() {
                 key={l.id}
                 onClick={() => goTo(l.id)}
                 data-testid={`nav-${l.id}-btn`}
-                className="relative rounded-full px-4 py-1.5 text-[13px] tracking-[0.01em] text-charcoal/80 hover:text-charcoal transition-colors group"
+                className="relative rounded-full px-3.5 py-1.5 text-[13px] tracking-[0.01em] text-charcoal/75 hover:text-charcoal transition-colors group"
               >
                 <span className="relative z-10">{l.label}</span>
                 <span
@@ -97,11 +78,11 @@ export default function GlassNav() {
                 />
               </button>
             ))}
-            <span className="w-px h-5 bg-charcoal/12 mx-2" />
+            <span className="w-px h-4 bg-charcoal/15 mx-2" />
             <a
               href={`tel:${RESTAURANT.phone.replace(/\D/g, "")}`}
               data-testid="nav-phone-link"
-              className="link-underline text-charcoal/75 hover:text-charcoal font-mono-spaced text-[13px] tracking-[0.02em] px-2"
+              className="link-underline text-charcoal/70 hover:text-charcoal font-mono-spaced text-[12.5px] tracking-[0.02em] px-2"
             >
               {RESTAURANT.phone}
             </a>
@@ -110,15 +91,9 @@ export default function GlassNav() {
           <button
             onClick={() => setOpen(true)}
             data-testid="nav-cart-btn"
-            className="group relative inline-flex items-center gap-2 rounded-full text-ivory pl-4 pr-3 py-2 text-[13px] font-medium magnetic hover:-translate-y-0.5 transition-transform"
-            style={{
-              background:
-                "linear-gradient(135deg, hsl(var(--charcoal)) 0%, #1a120f 60%, hsl(var(--munchy-red)) 140%)",
-              boxShadow:
-                "inset 0 1px 0 rgba(255,255,255,0.18), 0 10px 25px -10px rgba(0,0,0,0.5)",
-            }}
+            className="inline-flex items-center gap-2 rounded-full bg-charcoal text-ivory pl-3.5 pr-3 py-1.5 text-[13px] font-medium magnetic hover:-translate-y-0.5 transition-transform"
           >
-            <ShoppingBag size={15} strokeWidth={1.75} />
+            <ShoppingBag size={14} strokeWidth={1.75} />
             <span className="hidden sm:inline">Cart</span>
             <AnimatePresence>
               {totals.count > 0 && (
@@ -128,7 +103,7 @@ export default function GlassNav() {
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.4, opacity: 0 }}
                   transition={{ type: "spring", stiffness: 500, damping: 24 }}
-                  className="ml-1 inline-flex items-center justify-center min-w-[22px] h-[22px] px-1.5 rounded-full bg-ivory text-charcoal text-[11px] font-mono-spaced"
+                  className="ml-0.5 inline-flex items-center justify-center min-w-[20px] h-[20px] px-1.5 rounded-full bg-munchy text-ivory text-[10.5px] font-mono-spaced"
                   data-testid="nav-cart-badge"
                 >
                   {totals.count}

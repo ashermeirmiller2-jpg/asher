@@ -127,11 +127,7 @@ export default function BurgerScrollScene({ onOrderClick }) {
           <button
             onClick={onOrderClick}
             data-testid="burger-scene-order-btn"
-            className="group inline-flex items-center gap-2 rounded-full text-charcoal px-7 py-3.5 font-body text-sm font-medium magnetic hover:-translate-y-0.5 shadow-[0_20px_50px_-10px_rgba(248,196,46,0.55)]"
-            style={{
-              background:
-                "linear-gradient(135deg, hsl(var(--sun)) 0%, hsl(var(--gold)) 55%, hsl(var(--terracotta)) 100%)",
-            }}
+            className="group inline-flex items-center gap-2 rounded-full bg-munchy text-ivory px-7 py-3.5 font-body text-sm font-medium magnetic hover:-translate-y-0.5 hover:bg-ivory hover:text-charcoal transition-colors shadow-[0_20px_50px_-10px_rgba(199,45,60,0.45)]"
           >
             Build your burger
             <ArrowDown size={16} className="transition-transform group-hover:translate-y-0.5" />

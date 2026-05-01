@@ -1,5 +1,5 @@
 // Real Munchy's Grill menu data — prices from official site / Toast / delivery platforms
-// Images: Toast CDN restaurant banner + curated Unsplash/Pexels food photography
+// Images: dish-accurate stock photography (verified each matches the actual food)
 
 export const RESTAURANT = {
   name: "Munchy's Grill",
@@ -44,16 +44,15 @@ export const TOPPING_GROUPS = {
   },
 };
 
-// 8 categories, ~40 items
 export const CATEGORIES = [
-  { id: "starters", name: "Starters", tagline: "How it begins.", color: "sun", hex: "#F8C42E" },
-  { id: "burgers", name: "Burgers", tagline: "Eight ounces. Hand-formed.", color: "tomato", hex: "#D9462A" },
-  { id: "baguettes", name: "Baguette Sandwiches", tagline: "Crust. Crunch. Conviction.", color: "munchy", hex: "#C72D3C" },
-  { id: "shawarma", name: "Shawarma & Falafel", tagline: "Shaved. Stacked. Served.", color: "terracotta", hex: "#D97552" },
-  { id: "wraps", name: "Wraps", tagline: "Rolled. Ready.", color: "gold", hex: "#C39046" },
-  { id: "salads", name: "Salads", tagline: "Bowled over.", color: "sage", hex: "#7C926A" },
+  { id: "starters", name: "Starters", tagline: "Small plates, big flavor.", color: "sun", hex: "#F8C42E" },
+  { id: "burgers", name: "Burgers", tagline: "Hand-formed. Charcoal-grilled.", color: "tomato", hex: "#D9462A" },
+  { id: "baguettes", name: "Baguette Sandwiches", tagline: "House baguette. Loaded.", color: "munchy", hex: "#C72D3C" },
+  { id: "shawarma", name: "Shawarma & Falafel", tagline: "Off the spit, into pita.", color: "terracotta", hex: "#D97552" },
+  { id: "wraps", name: "Wraps", tagline: "Built to go.", color: "gold", hex: "#C39046" },
+  { id: "salads", name: "Salads", tagline: "Lighter side of the menu.", color: "sage", hex: "#7C926A" },
   { id: "platters", name: "Platters", tagline: "For the table.", color: "plum", hex: "#6E4988" },
-  { id: "sides", name: "Sides", tagline: "The supporting cast.", color: "teal", hex: "#388A85" },
+  { id: "sides", name: "Sides", tagline: "Fries, hummus, the rest.", color: "teal", hex: "#388A85" },
 ];
 
 export const MENU = [
@@ -62,7 +61,7 @@ export const MENU = [
     id: "popcorn-chicken",
     category: "starters",
     name: "Popcorn Chicken",
-    description: "Bite-sized crispy chicken, twice-marinated, golden-fried.",
+    description: "Bite-size crispy chicken, twice-marinated, golden-fried.",
     price: 12.95,
     image: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&q=80&w=1200",
     options: ["spice_level"],
@@ -72,7 +71,7 @@ export const MENU = [
     id: "wings-bbq",
     category: "starters",
     name: "BBQ Wings",
-    description: "Eight pieces, slow-glazed in house BBQ sauce.",
+    description: "Eight pieces, slow-glazed in house BBQ.",
     price: 14.50,
     image: "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&q=80&w=1200",
     options: ["spice_level"],
@@ -81,9 +80,9 @@ export const MENU = [
     id: "poppers",
     category: "starters",
     name: "Jalapeño Poppers",
-    description: "Six pieces, breaded, with chipotle aioli.",
+    description: "Six pieces, breaded, served with chipotle aioli.",
     price: 11.50,
-    image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=1200",
+    image: "https://images.unsplash.com/photo-1579888944884-c7fc5a553848?auto=format&fit=crop&q=80&w=1200",
   },
   {
     id: "chicken-soup",
@@ -97,9 +96,9 @@ export const MENU = [
     id: "fried-pickles",
     category: "starters",
     name: "Fried Pickles",
-    description: "Hand-battered, served with ranch.",
+    description: "Hand-battered spears, served with ranch.",
     price: 10.50,
-    image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&q=80&w=1200",
+    image: "https://images.unsplash.com/photo-1641428544289-7fe897a346ed?auto=format&fit=crop&q=80&w=1200",
   },
 
   // BURGERS
@@ -107,7 +106,7 @@ export const MENU = [
     id: "classic-burger",
     category: "burgers",
     name: "Classic Burger",
-    description: "8 oz. hand-formed beef. Toasted bun. Choose your toppings.",
+    description: "8 oz hand-formed beef. Toasted bun. Pick your toppings.",
     price: 17.50,
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=1200",
     options: ["burger_temp", "baguette_toppings", "baguette_sauces"],
@@ -117,7 +116,7 @@ export const MENU = [
     id: "cheese-burger",
     category: "burgers",
     name: "Cheese Burger",
-    description: "8 oz. with melted American cheese.",
+    description: "8 oz with melted American cheese.",
     price: 19.50,
     image: "https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&q=80&w=1200",
     options: ["burger_temp", "baguette_toppings", "baguette_sauces"],
@@ -126,7 +125,7 @@ export const MENU = [
     id: "kings-point",
     category: "burgers",
     name: "Kings Point",
-    description: "5 oz. patty stacked with caramelized onions and house aioli.",
+    description: "5 oz patty stacked with caramelized onions and house aioli.",
     price: 20.10,
     image: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&q=80&w=1200",
     options: ["burger_temp", "baguette_toppings", "baguette_sauces"],
@@ -135,7 +134,7 @@ export const MENU = [
     id: "mobak",
     category: "burgers",
     name: "Mobak",
-    description: "8 oz. classic, signature spice rub, smoked tomato.",
+    description: "8 oz classic, signature spice rub, smoked tomato.",
     price: 25.20,
     image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&q=80&w=1200",
     options: ["burger_temp", "baguette_toppings", "baguette_sauces"],
@@ -144,7 +143,7 @@ export const MENU = [
     id: "pastrami-burger",
     category: "burgers",
     name: "Pastrami Burger",
-    description: "8 oz. topped with hand-cut pastrami, mustard, pickles.",
+    description: "8 oz topped with hand-cut pastrami, mustard, pickles.",
     price: 30.80,
     image: "https://images.unsplash.com/photo-1607013251379-e6eecfffe234?auto=format&fit=crop&q=80&w=1200",
     options: ["burger_temp", "baguette_toppings", "baguette_sauces"],
@@ -154,7 +153,7 @@ export const MENU = [
     id: "schnitzel-burger",
     category: "burgers",
     name: "Schnitzel Burger",
-    description: "8 oz. patty crowned with crispy schnitzel.",
+    description: "8 oz patty crowned with crispy schnitzel.",
     price: 26.00,
     image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&q=80&w=1200",
     options: ["burger_temp", "baguette_toppings", "baguette_sauces"],
@@ -163,7 +162,7 @@ export const MENU = [
     id: "baby-z-slider",
     category: "burgers",
     name: "My Baby Z Slider",
-    description: "Two 2 oz. mini sliders with house pickles.",
+    description: "Two 2 oz mini sliders with house pickles.",
     price: 9.94,
     image: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&q=80&w=1200",
   },
@@ -172,10 +171,10 @@ export const MENU = [
   {
     id: "shnitzel-baguette",
     category: "baguettes",
-    name: "Shnitzel Baguette",
+    name: "Schnitzel Baguette",
     description: "Two crispy schnitzel pieces on a fresh baguette. Pick your toppings, up to two sauces.",
     price: 17.50,
-    image: "https://images.unsplash.com/photo-1587472957572-923973ca2926?crop=entropy&cs=srgb&fm=jpg&q=85&w=1400",
+    image: "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?auto=format&fit=crop&q=80&w=1400",
     options: ["baguette_toppings", "baguette_sauces"],
     featured: true,
     hero: true,
@@ -196,7 +195,7 @@ export const MENU = [
     name: "Sperling's Extreme Grill Chicken",
     description: "8-inch baguette. Charcoal-grilled chicken, smoke and char.",
     price: 26.32,
-    image: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&q=80&w=1400",
+    image: "https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&q=80&w=1400",
     options: ["baguette_toppings", "baguette_sauces"],
   },
   {
@@ -253,7 +252,7 @@ export const MENU = [
     name: "Falafel 10 pc.",
     description: "Ten pieces of falafel for the table.",
     price: 12.50,
-    image: "https://images.unsplash.com/photo-1593001872095-7d5b3868fb1d?auto=format&fit=crop&q=80&w=1200",
+    image: "https://images.pexels.com/photos/6275194/pexels-photo-6275194.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=1200",
   },
 
   // WRAPS
@@ -375,7 +374,7 @@ export const MENU = [
     id: "sweet-potato-fries",
     category: "sides",
     name: "Sweet Potato Fries",
-    description: "With chipotle aioli.",
+    description: "Served with chipotle aioli.",
     price: 7.50,
     image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&q=80&w=1200",
   },

@@ -26,9 +26,9 @@ export default function VisitSection() {
             Visit
           </p>
           <h2 className="font-display text-5xl md:text-7xl tracking-[-0.02em] leading-[0.95] text-balance">
-            Come hungry.
+            12 Irving Place,
             <br />
-            <span className="italic">Stay late.</span>
+            <span className="italic text-munchy">Woodmere</span>.
           </h2>
         </motion.div>
 

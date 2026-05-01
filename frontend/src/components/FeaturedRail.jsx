@@ -18,16 +18,16 @@ export default function FeaturedRail({ onItemClick }) {
         >
           <div>
             <p className="text-charcoal/50 text-[11px] uppercase tracking-[0.32em] font-body mb-4">
-              The Signatures
+              Most ordered
             </p>
             <h2 className="font-display text-5xl md:text-7xl tracking-[-0.02em] leading-[0.95] text-balance">
-              Eight things <span className="italic">we get</span>
-              <br />asked about most.
+              The dishes <span className="italic">people</span>
+              <br />keep coming back for.
             </h2>
           </div>
-          <p className="hidden md:block max-w-xs text-charcoal/70 text-sm leading-relaxed pb-2">
-            Built around a hand-formed patty, a freshly fried schnitzel, and
-            slow-roasted shawarma off the spit.
+          <p className="hidden md:block max-w-xs text-charcoal/65 text-sm leading-relaxed pb-2">
+            Schnitzel baguettes, hand-formed burgers, shawarma off the spit. The
+            stuff regulars order without looking at the menu.
           </p>
         </motion.div>
       </div>
