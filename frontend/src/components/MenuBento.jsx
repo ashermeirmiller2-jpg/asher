@@ -253,59 +253,86 @@ function BentoGrid({ items, onItemClick, accent }) {
 function ItemCardFull({ item, onClick, accent }) {
   const tags = itemTags(item);
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      data-testid={`menu-item-${item.id}`}
-      className="group relative w-full h-full overflow-hidden rounded-[24px] md:rounded-[28px] bg-bone shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_60px_-30px_rgba(0,0,0,0.35)] transition-all duration-700 text-left"
-    >
-      <motion.img
-        src={item.image}
-        alt={item.name}
-        loading="lazy"
-        draggable="false"
-        className="absolute inset-0 w-full h-full object-cover"
-        whileHover={{ scale: 1.06 }}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
-
-      {/* Tags top-left */}
-      {tags.length > 0 && (
-        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[70%]">
-          {tags.map((t) => (
-            <span
-              key={t.label}
-              className="rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-white font-body font-medium backdrop-blur-md"
-              style={{ backgroundColor: `hsl(var(--${t.color}) / 0.92)` }}
-            >
-              {t.label}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Price chip top-right with category accent border */}
-      <div
-        className="absolute top-3 right-3 glass rounded-full px-3 py-1 text-xs font-mono-spaced text-charcoal border-2"
-        style={{ borderColor: accent }}
+    <div className="card-3d-wrap h-full w-full">
+      <button
+        type="button"
+        onClick={onClick}
+        data-testid={`menu-item-${item.id}`}
+        className="card-3d group relative w-full h-full overflow-hidden rounded-[24px] md:rounded-[28px] bg-bone text-left"
+        style={{
+          boxShadow:
+            "0 2px 4px rgba(20,10,6,0.04), 0 12px 30px -18px rgba(20,10,6,0.22)",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow =
+            "0 6px 10px rgba(20,10,6,0.08), 0 40px 60px -20px rgba(20,10,6,0.4), 0 80px 120px -40px rgba(20,10,6,0.3)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow =
+            "0 2px 4px rgba(20,10,6,0.04), 0 12px 30px -18px rgba(20,10,6,0.22)";
+        }}
       >
-        ${item.price.toFixed(2)}
-      </div>
+        <motion.img
+          src={item.image}
+          alt={item.name}
+          loading="lazy"
+          draggable="false"
+          className="absolute inset-0 w-full h-full object-cover"
+          whileHover={{ scale: 1.08 }}
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
 
-      {/* Hover affordance */}
-      <div className="absolute right-4 bottom-[88px] md:bottom-[100px] glass rounded-full px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-charcoal opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-body">
-        Customize
-      </div>
+        {/* Glass sheen on hover */}
+        <span className="card-3d-sheen rounded-[24px] md:rounded-[28px]" aria-hidden="true" />
 
-      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-        <h4 className="font-display text-ivory text-xl md:text-2xl tracking-tight leading-tight text-balance">
-          {item.name}
-        </h4>
-        <p className="mt-1 text-ivory/75 text-xs md:text-sm font-body line-clamp-2 max-w-md">
-          {item.description}
-        </p>
-      </div>
-    </button>
+        {/* Inner top highlight */}
+        <span
+          className="absolute top-0 left-6 right-6 h-px pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Tags top-left */}
+        {tags.length > 0 && (
+          <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[70%] z-[2]">
+            {tags.map((t) => (
+              <span
+                key={t.label}
+                className="rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-white font-body font-medium backdrop-blur-md shadow-[0_4px_10px_-2px_rgba(0,0,0,0.4)]"
+                style={{ backgroundColor: `hsl(var(--${t.color}) / 0.92)` }}
+              >
+                {t.label}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Price chip top-right with category accent border */}
+        <div
+          className="absolute top-3 right-3 glass rounded-full px-3 py-1 text-xs font-mono-spaced text-charcoal border-2 z-[2]"
+          style={{ borderColor: accent }}
+        >
+          ${item.price.toFixed(2)}
+        </div>
+
+        {/* Hover affordance */}
+        <div className="absolute right-4 bottom-[88px] md:bottom-[100px] glass rounded-full px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-charcoal opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-body z-[2]">
+          Customize
+        </div>
+
+        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 z-[2]">
+          <h4 className="font-display text-ivory text-xl md:text-2xl tracking-tight leading-tight text-balance drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+            {item.name}
+          </h4>
+          <p className="mt-1 text-ivory/80 text-xs md:text-sm font-body line-clamp-2 max-w-md drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
+            {item.description}
+          </p>
+        </div>
+      </button>
+    </div>
   );
 }
