@@ -1,0 +1,33 @@
+{
+  "summary": "Iteration 4 — Per-category 'Top item + Learn more' expand/collapse pattern + glass edge-stroke removal regression. Backend pytest: 11/11 PASS (orders + contact CRUD/validation, no _id leak). Frontend Playwright on REACT_APP_BACKEND_URL: ALL critical flows green. (1) All 8 categories (starters, burgers, baguettes, shawarma, wraps, salads, platters, sides) render exactly ONE TopItemCard (data-testid=menu-top-<id>) at top with 'TOP PICK' chip. Top picks match spec: starters→popcorn-chicken, burgers→classic-burger, baguettes→shnitzel-baguette, shawarma→chicken-shawarma, wraps→schnitzel-wrap, salads→garden-salad, platters→shawarma-platter, sides→fries. (2) 'Learn more · N more' button present per category at top-left (data-testid=cat-expand-<id>) with correct counts (4/6/4/3/2/3/4/4). Click toggles: text→'Close', chevron rotates, rest grid (data-testid=cat-rest-<id>) mounts via AnimatePresence height-auto. Click again unmounts cleanly — verified on starters (5 items → 4 in rest after expand). (3) TopItemCard click opens ItemModal with full options (Cook Temperature, toppings, Add to cart). (4) Rest item card click also opens ItemModal (verified menu-item-cheese-burger inside cat-rest-burgers). (5) Search 'burger' hides starters block (0 matches), keeps burgers block — empty categories don't render. (6) Glass utilities: ZERO 'inset 0px 0px 0px 0.5px' strokes on .glass / .glass-strong / .glass-dark / .chip-dark — programmatically verified via getComputedStyle.boxShadow regex. (7) Scroll-spy: scrolling to #cat-burgers and #cat-shawarma activates correct pill (inline style background = cat hex). (8) E2E flow: top card click → modal → Add to cart → floating-cart-pill → Continue to checkout → fill name/phone (TEST Iter4 / 5559998877) → submit → 'Thanks, TEST.' + 'Confirmation #C5D0279A' shown with totals ($19.58). Toast POS = MOCKED (Continue to Toast button shows on success but order persists via POST /api/orders).",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_backend_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "MenuBento.jsx CategoryBlock correctly uses items.find(featured) || items[0] as top-pick fallback — verified working for all 4 non-featured categories (starters/wraps/salads/sides default to items[0]).",
+    "AnimatePresence wraps motion.div with height:0→auto for rest section — animation is smooth, no jumps observed at 1440x900.",
+    "Carry-over from iter3 (low priority): scroll-spy uses scroll event + getBoundingClientRect on every category every frame; IntersectionObserver would be more performant.",
+    "Carry-over: Mobile menu search input is hidden (hidden md:flex) — no mobile alternative.",
+    "Carry-over: '02 / 08' label uses CATEGORIES.length correctly (String(CATEGORIES.length).padStart(2,'0')), good — earlier comment about hardcoded 8 is now resolved in current code.",
+    "TopItemCard duplicates onMouseEnter/Leave inline shadow swap with ItemCardFull — could be extracted into a shared CSS hover class, ~15 LOC each.",
+    "BentoGrid in /rest section now operates on fewer items (items.length-1); for categories with 2 rest items the m=0/m=1 wide spans both render full-width which is fine but worth noting visually."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (11/11 pytest)", "frontend": "100% (all 11 review scenarios covered)"},
+  "test_credentials": "None required (guest checkout, no auth)",
+  "seed_data_creation": "Created during this run: 1 order via E2E (TEST Iter4 / 5559998877 / Confirmation #C5D0279A / $19.58 / pending). Plus pytest fixtures: 1 TEST Jane Doe order + 1 TEST Contact contact.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Public URL https://munchy-glass.preview.emergentagent.com. New testids in this iteration: cat-expand-<catId> (Learn more button), cat-rest-<catId> (rest wrapper, only mounted when expanded), menu-top-<itemId> (top hero card). Existing testids preserved: menu-section, menu-sticky-nav, menu-nav-<id>, menu-search-input, menu-item-<id>, menu-cat-<id>, floating-cart-pill, checkout-{name-input|phone-input|notes-input|submit-btn}, contact-{name-input|email-input|message-input|submit-btn}. Backend tests: cd /app && python -m pytest backend/tests/ -v. Glass utilities (.glass / .glass-strong / .glass-dark / .chip-dark) now have NO inset 0.5px white edge strokes — preserve this if CSS is rewritten. Toast POS = MOCKED — POST /api/orders persists to internal Mongo, success page shows 'Continue to Toast for payment' button as decorative handoff."
+}
