@@ -27,6 +27,15 @@ Merge the public Munchy's Grill marketing site and its Toast Tab online ordering
 - Working contact form
 - No emojis. Apple geometry + glassmorphism. Premium typography (Instrument Serif + Geist).
 
+## What's Been Implemented (2026-05-03 — Glass-edge removal + per-category Top pick + expand)
+- **Glass edge lines — eliminated**: removed all `inset 0 0 0 0.5px rgba(255,255,255,...)` strokes from `.glass` / `.glass-strong` / `.glass-dark` / `.chip-dark`. Glass panels now pure blur + soft drop-shadow, no visible edge border.
+- **Per-category "Top pick" hero + expand**: each of the 8 menu categories now renders ONE cinematic 21:9 hero card for its flagship item (`TopItemCard` in `MenuBento.jsx`). Flagships picked via `items.find(featured) || items[0]` — resolves to popcorn-chicken / classic-burger / shnitzel-baguette / chicken-shawarma / schnitzel-wrap / garden-salad / shawarma-platter / fries.
+- **"Learn more · N more" top-left expander**: animated button under each category tagline (`data-testid=cat-expand-<id>`). Click toggles: text swaps to "Close", chevron rotates 180°, divider line shrinks, and the remaining items mount below inside an AnimatePresence height-auto container (`data-testid=cat-rest-<id>`) with the existing BentoGrid.
+- **"Top pick" chip**: solid dark glass chip on top-left of the hero card; works alongside existing Bestseller / Spicy / Veg / Signature tags.
+
+## Test Status (cont.)
+- Iteration 4 (2026-05-03): 100% backend (11/11 pytest) + 100% frontend (all 11 review scenarios). Verified: all 8 categories render top-pick + Learn more, expand/collapse animation smooth, glass has ZERO inset 0.5px strokes, E2E checkout still green ($19.58 test order confirmed via POST /api/orders). Report: `/app/test_reports/iteration_4.json`
+
 ## What's Been Implemented (2026-05-01 — Anti-AI-slop pass)
 - **Borders + glass overhaul**: rewrote `.glass` / `.glass-strong` / `.glass-dark` to be properly translucent (Apple-style 30–45% opacity, no thick whitewashed borders, inset 0.5px highlight only). Killed the colored `border-2` price chips on menu cards — replaced with new `.chip-dark` solid-dark glass pill. Reduced `.card-3d:hover` from aggressive `translateZ(40px)` tilt to subtle `translateY(-6px) rotateX(2deg)`.
 - **Hero rebuild**: switched from full-bleed pinned interior with floating serif (unreadable) to magazine-grade split layout — bold serif headline + Munchy red italic accent on the LEFT, real Munchy's interior banner on the RIGHT with editorial caption pill. Dropped the AI-poetry "Woodmere · NY · Est. 2018" eyebrow.
