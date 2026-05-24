@@ -62,25 +62,53 @@
   .font-body { font-family: 'Geist', sans-serif; }
   .font-mono-spaced { font-feature-settings: "tnum"; }
 
-  /* Apple-style glass: pure blur + soft shadow. NO edge/border stroke. */
+  /* iOS 26 Liquid Glass: specular edge, layered translucency, lensing. */
   .glass {
     position: relative;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    box-shadow: 0 18px 40px -24px rgba(20, 10, 6, 0.22);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.52) 0%,
+      rgba(255, 255, 255, 0.32) 100%
+    );
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+      /* Specular edge highlight - top left */
+      inset 1px 1px 2px rgba(255, 255, 255, 0.7),
+      /* Depth shadow */
+      0 20px 50px -18px rgba(20, 10, 6, 0.28),
+      /* Ambient shadow */
+      0 0 60px -20px rgba(20, 10, 6, 0.15);
   }
   .glass-strong {
     position: relative;
-    background: rgba(255, 255, 255, 0.32);
-    backdrop-filter: blur(32px) saturate(190%);
-    -webkit-backdrop-filter: blur(32px) saturate(190%);
-    box-shadow: 0 25px 60px -30px rgba(20, 10, 6, 0.3);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.48) 0%,
+      rgba(255, 255, 255, 0.24) 100%
+    );
+    backdrop-filter: blur(40px) saturate(210%);
+    -webkit-backdrop-filter: blur(40px) saturate(210%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+      inset 1px 1px 3px rgba(255, 255, 255, 0.8),
+      0 28px 70px -20px rgba(20, 10, 6, 0.35),
+      0 0 80px -20px rgba(20, 10, 6, 0.18);
   }
   .glass-dark {
-    background: rgba(14, 10, 9, 0.5);
-    backdrop-filter: blur(22px) saturate(160%);
-    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      rgba(20, 10, 6, 0.65) 0%,
+      rgba(14, 10, 9, 0.45) 100%
+    );
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+      inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+      0 18px 40px -18px rgba(0, 0, 0, 0.4);
   }
   /* Pill chips that sit on photographs - solid dark, no edge line */
   .chip-dark {
@@ -101,23 +129,65 @@
   .no-scrollbar { scrollbar-width: none; }
 
   .smooth-scroll { scroll-behavior: smooth; }
-  .magnetic { transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1); }
+  /* iOS 26 spring physics: snappy but natural */
+  .magnetic { transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1); }
 
-  /* Subtle 3D card lift - editorial, not aggressive */
+  /* Spring animations */
+  @keyframes spring-pop {
+    0% { transform: scale(0.92); opacity: 0; }
+    70% { transform: scale(1.02); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes spring-in {
+    0% { transform: translateY(20px); opacity: 0; }
+    70% { transform: translateY(-2px); }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  .spring-pop { animation: spring-pop 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .spring-in { animation: spring-in 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+  /* iOS 26 Liquid Glass card lift with lensing effect */
   .card-3d-wrap {
-    perspective: 1400px;
+    perspective: 1600px;
   }
   .card-3d {
     transform-style: preserve-3d;
-    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1),
-                box-shadow 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 500ms cubic-bezier(0.16, 1, 0.3, 1),
+                filter 500ms cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform;
+    border-radius: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-3d::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 10;
   }
   .card-3d:hover {
-    transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
+    transform: translateY(-8px) rotateX(3deg) rotateY(-3deg) scale(1.02);
+    filter: brightness(1.08);
+  }
+  .card-3d:hover::before {
+    opacity: 0.4;
   }
   .card-3d-alt:hover {
-    transform: translateY(-6px) rotateX(2deg) rotateY(2deg);
+    transform: translateY(-8px) rotateX(3deg) rotateY(3deg) scale(1.02);
+    filter: brightness(1.08);
   }
   .card-3d-sheen {
     position: absolute;
@@ -126,29 +196,46 @@
     background: linear-gradient(
       135deg,
       rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.14) 28%,
-      rgba(255, 255, 255, 0) 55%
+      rgba(255, 255, 255, 0.2) 25%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0) 70%
     );
     opacity: 0;
-    transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1);
-    mix-blend-mode: overlay;
+    transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+    mix-blend-mode: screen;
   }
   .card-3d-wrap:hover .card-3d-sheen { opacity: 1; }
 
-  /* Animated underline */
+  /* Animated underline - iOS 26 style */
   .link-underline {
     position: relative;
+    transition: color 350ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .link-underline::after {
     content: '';
-    position: absolute; left: 0; bottom: -4px; height: 1px; width: 100%;
-    background: currentColor; transform-origin: right; transform: scaleX(0);
-    transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    position: absolute; left: 0; bottom: -4px; height: 2px; width: 100%;
+    background: linear-gradient(90deg, currentColor, transparent);
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 1px;
   }
+  .link-underline:hover { color: hsl(var(--munchy-red)); }
   .link-underline:hover::after { transform-origin: left; transform: scaleX(1); }
 
-  /* Hairline divider - 1px charcoal/8 */
-  .hairline { border-color: rgba(20, 10, 6, 0.08); }
+  /* Hairline divider with subtle glow */
+  .hairline {
+    border-color: rgba(20, 10, 6, 0.08);
+    transition: border-color 300ms ease;
+  }
+
+  /* iOS 26 button base */
+  button, [role="button"] {
+    transition: all 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  button:active, [role="button"]:active {
+    transform: scale(0.96);
+  }
 }
 
 /* Smooth scroll on the document */

@@ -1,0 +1,32 @@
+{
+  "restaurant": {
+    "name": "Munchy's Grill",
+    "tagline": "If you ain't here, you ain't munching.",
+    "address": "12 Irving Place, Woodmere, NY 11598",
+    "phone": "(516) 595-3500",
+    "toastUrl": "https://order.toasttab.com/online/munchy-s-grill-12-irving-place",
+    "logo": "https://www.munchysgrillny.com/assets/logo2-f258ddec.png"
+  },
+  "categories": [
+    {"id": "starters", "name": "Starters", "tagline": "Small plates, big flavor.", "hex": "#F8C42E"},
+    {"id": "burgers", "name": "Burgers", "tagline": "Hand-formed. Charcoal-grilled.", "hex": "#D9462A"},
+    {"id": "baguettes", "name": "Baguette Sandwiches", "tagline": "House baguette. Loaded.", "hex": "#C72D3C"},
+    {"id": "shawarma", "name": "Shawarma & Falafel", "tagline": "Off the spit, into pita.", "hex": "#D97552"},
+    {"id": "wraps", "name": "Wraps", "tagline": "Built to go.", "hex": "#C39046"},
+    {"id": "salads", "name": "Salads", "tagline": "Lighter side of the menu.", "hex": "#7C926A"},
+    {"id": "platters", "name": "Platters", "tagline": "For the table.", "hex": "#6E4988"},
+    {"id": "sides", "name": "Sides", "tagline": "Fries, hummus, the rest.", "hex": "#388A85"}
+  ],
+  "items": [
+    {"id": "popcorn-chicken", "category": "starters", "name": "Popcorn Chicken", "description": "Bite-size crispy chicken, twice-marinated, golden-fried.", "price": 12.95},
+    {"id": "wings-bbq", "category": "starters", "name": "BBQ Wings", "description": "Eight pieces, slow-glazed in house BBQ.", "price": 14.50},
+    {"id": "classic-burger", "category": "burgers", "name": "Classic Burger", "description": "8 oz hand-formed beef. Toasted bun. Pick your toppings.", "price": 17.50, "featured": true},
+    {"id": "shnitzel-baguette", "category": "baguettes", "name": "Schnitzel Baguette", "description": "Two crispy schnitzel pieces on a fresh baguette.", "price": 17.50, "featured": true},
+    {"id": "chicken-shawarma", "category": "shawarma", "name": "Chicken Shawarma", "description": "Pita or laffa. Shaved off the spit. Tahini and amba.", "price": 21.84, "featured": true},
+    {"id": "falafel-pita", "category": "shawarma", "name": "Falafel Pita", "description": "Five hand-rolled falafel. Crisp shell, herbed center.", "price": 14.50},
+    {"id": "schnitzel-wrap", "category": "wraps", "name": "Schnitzel Wrap", "description": "Crispy schnitzel, lettuce, tomato, garlic aioli, in a flour wrap.", "price": 17.50},
+    {"id": "garden-salad", "category": "salads", "name": "Garden Salad", "description": "Mixed greens, tomato, cucumber, red onion, house vinaigrette.", "price": 12.50},
+    {"id": "shawarma-platter", "category": "platters", "name": "Chicken Shawarma Platter", "description": "Shawarma, rice, hummus, Israeli salad, pita.", "price": 26.50, "featured": true},
+    {"id": "fries", "category": "sides", "name": "French Fries", "description": "Hand-cut, double-fried.", "price": 6.50}
+  ]
+}
