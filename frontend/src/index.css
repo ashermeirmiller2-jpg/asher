@@ -6,45 +6,45 @@
 
 @layer base {
   :root {
-    --background: 36 33% 93%;
-    --foreground: 0 0% 7%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 7%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7%;
-    --primary: 355 78% 48%;
+    /* Munchy's Grill Primary Palette */
+    --background: 164 35% 30%;
+    --foreground: 0 0% 98%;
+    --card: 164 35% 28%;
+    --card-foreground: 0 0% 98%;
+    --popover: 164 35% 32%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 164 45% 38%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 35 29% 88%;
+    --secondary: 39 86% 48%;
     --secondary-foreground: 0 0% 7%;
-    --muted: 38 26% 87%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 38 60% 56%;
-    --accent-foreground: 0 0% 7%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 35 20% 83%;
-    --input: 35 20% 83%;
-    --ring: 355 78% 48%;
+    --muted: 164 25% 45%;
+    --muted-foreground: 0 0% 85%;
+    --accent: 174 56% 42%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 39 86% 48%;
+    --destructive-foreground: 0 0% 7%;
+    --border: 164 30% 38%;
+    --input: 164 30% 38%;
+    --ring: 39 86% 48%;
     --radius: 1rem;
-    --ivory: 36 33% 93%;
-    --bone: 38 30% 96%;
+    --ivory: 0 0% 98%;
+    --bone: 164 35% 35%;
     --charcoal: 0 0% 7%;
-    --munchy-red: 355 78% 48%;
-    --gold: 38 60% 56%;
-    --sun: 47 95% 56%;
-    --tomato: 12 78% 52%;
-    --sage: 88 22% 52%;
-    --plum: 282 32% 42%;
-    --terracotta: 14 65% 58%;
-    --teal: 178 45% 38%;
+    --munchy-red: 164 45% 38%;
+    --forest-green: 164 50% 32%;
+    --gold: 39 86% 48%;
+    --orange: 36 95% 50%;
+    --teal: 174 56% 42%;
+    --cyan: 176 60% 44%;
+    --white: 0 0% 98%;
   }
 }
 
 @layer base {
   * { @apply border-border; }
   html, body, #root {
-    background: hsl(var(--ivory));
-    color: hsl(var(--foreground));
+    background: hsl(var(--forest-green));
+    color: hsl(var(--white));
   }
   body {
     margin: 0;
@@ -54,7 +54,7 @@
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
-  ::selection { background: hsl(var(--munchy-red)); color: white; }
+  ::selection { background: hsl(var(--gold)); color: hsl(var(--forest-green)); }
 }
 
 @layer utilities {
@@ -62,53 +62,79 @@
   .font-body { font-family: 'Geist', sans-serif; }
   .font-mono-spaced { font-feature-settings: "tnum"; }
 
-  /* iOS 26 Liquid Glass: specular edge, layered translucency, lensing. */
+  /* iOS 26 Liquid Glass with Munchy's Color Tints */
   .glass {
     position: relative;
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.52) 0%,
-      rgba(255, 255, 255, 0.32) 100%
+      rgba(255, 255, 255, 0.56) 0%,
+      rgba(255, 255, 255, 0.36) 100%
     );
     backdrop-filter: blur(32px) saturate(200%);
     -webkit-backdrop-filter: blur(32px) saturate(200%);
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow:
-      /* Specular edge highlight - top left */
       inset 1px 1px 2px rgba(255, 255, 255, 0.7),
-      /* Depth shadow */
-      0 20px 50px -18px rgba(20, 10, 6, 0.28),
-      /* Ambient shadow */
-      0 0 60px -20px rgba(20, 10, 6, 0.15);
+      0 20px 50px -18px rgba(26, 93, 77, 0.28),
+      0 0 60px -20px rgba(26, 93, 77, 0.15);
   }
   .glass-strong {
     position: relative;
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.48) 0%,
-      rgba(255, 255, 255, 0.24) 100%
+      rgba(255, 255, 255, 0.52) 0%,
+      rgba(255, 255, 255, 0.28) 100%
     );
     backdrop-filter: blur(40px) saturate(210%);
     -webkit-backdrop-filter: blur(40px) saturate(210%);
     border: 1px solid rgba(255, 255, 255, 0.6);
     box-shadow:
       inset 1px 1px 3px rgba(255, 255, 255, 0.8),
-      0 28px 70px -20px rgba(20, 10, 6, 0.35),
-      0 0 80px -20px rgba(20, 10, 6, 0.18);
+      0 28px 70px -20px rgba(26, 93, 77, 0.35),
+      0 0 80px -20px rgba(26, 93, 77, 0.18);
   }
   .glass-dark {
     position: relative;
     background: linear-gradient(
       135deg,
-      rgba(20, 10, 6, 0.65) 0%,
-      rgba(14, 10, 9, 0.45) 100%
+      rgba(26, 93, 77, 0.72) 0%,
+      rgba(20, 75, 65, 0.55) 100%
     );
     backdrop-filter: blur(28px) saturate(180%);
     -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow:
-      inset 1px 1px 2px rgba(255, 255, 255, 0.2),
-      0 18px 40px -18px rgba(0, 0, 0, 0.4);
+      inset 1px 1px 2px rgba(255, 255, 255, 0.25),
+      0 18px 40px -18px rgba(0, 0, 0, 0.5);
+  }
+  /* Tinted glass variants for Munchy's vibrant palette */
+  .glass-gold {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      rgba(232, 165, 55, 0.48) 0%,
+      rgba(232, 165, 55, 0.24) 100%
+    );
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(232, 165, 55, 0.4);
+    box-shadow:
+      inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+      0 20px 50px -18px rgba(232, 165, 55, 0.25);
+  }
+  .glass-teal {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      rgba(32, 168, 154, 0.48) 0%,
+      rgba(32, 168, 154, 0.24) 100%
+    );
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(32, 168, 154, 0.4);
+    box-shadow:
+      inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+      0 20px 50px -18px rgba(32, 168, 154, 0.25);
   }
   /* Pill chips that sit on photographs - solid dark, no edge line */
   .chip-dark {
