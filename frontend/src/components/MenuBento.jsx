@@ -286,19 +286,7 @@ function TopItemCard({ item, onClick }) {
         type="button"
         onClick={onClick}
         data-testid={`menu-top-${item.id}`}
-        className="card-3d group relative block w-full text-left overflow-hidden rounded-[24px] md:rounded-[32px] aspect-[4/3] md:aspect-[21/9] bg-bone"
-        style={{
-          boxShadow:
-            "0 1px 2px rgba(20,10,6,0.04), 0 16px 40px -20px rgba(20,10,6,0.22)",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow =
-            "0 4px 8px rgba(20,10,6,0.06), 0 40px 70px -25px rgba(20,10,6,0.32)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow =
-            "0 1px 2px rgba(20,10,6,0.04), 0 16px 40px -20px rgba(20,10,6,0.22)";
-        }}
+        className="card-3d group relative block w-full text-left overflow-hidden rounded-[24px] md:rounded-[32px] aspect-[4/3] md:aspect-[21/9] bg-bone shadow-card-lg hover:shadow-card-lg-hover transition-shadow duration-600"
       >
         <motion.img
           src={item.image}
@@ -392,19 +380,7 @@ function ItemCardFull({ item, onClick }) {
         type="button"
         onClick={onClick}
         data-testid={`menu-item-${item.id}`}
-        className="card-3d group relative w-full h-full overflow-hidden rounded-[20px] md:rounded-[24px] bg-bone text-left"
-        style={{
-          boxShadow:
-            "0 1px 2px rgba(20,10,6,0.04), 0 12px 28px -18px rgba(20,10,6,0.18)",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow =
-            "0 4px 8px rgba(20,10,6,0.06), 0 30px 50px -20px rgba(20,10,6,0.28)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow =
-            "0 1px 2px rgba(20,10,6,0.04), 0 12px 28px -18px rgba(20,10,6,0.18)";
-        }}
+        className="card-3d group relative w-full h-full overflow-hidden rounded-[20px] md:rounded-[24px] bg-bone text-left shadow-card hover:shadow-card-hover transition-shadow duration-600"
       >
         <motion.img
           src={item.image}

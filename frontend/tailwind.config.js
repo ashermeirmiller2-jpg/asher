@@ -38,6 +38,12 @@ module.exports = {
         display: ['"Instrument Serif"', 'Times New Roman', 'serif'],
         body: ['Geist', 'system-ui', 'sans-serif'],
       },
+      boxShadow: {
+        'card': '0 1px 2px rgba(20,10,6,0.04), 0 12px 28px -18px rgba(20,10,6,0.18)',
+        'card-hover': '0 4px 8px rgba(20,10,6,0.06), 0 30px 50px -20px rgba(20,10,6,0.28)',
+        'card-lg': '0 1px 2px rgba(20,10,6,0.04), 0 16px 40px -20px rgba(20,10,6,0.22)',
+        'card-lg-hover': '0 4px 8px rgba(20,10,6,0.06), 0 40px 70px -25px rgba(20,10,6,0.32)',
+      },
       keyframes: {
         'accordion-down': { from: { height: '0' }, to: { height: 'var(--radix-accordion-content-height)' } },
         'accordion-up': { from: { height: 'var(--radix-accordion-content-height)' }, to: { height: '0' } },
