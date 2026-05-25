@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, Menu, X, Phone } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { RESTAURANT } from "@/data/menu";
 
@@ -12,6 +12,7 @@ const links = [
 
 export default function GlassNav() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { totals, setOpen } = useCart();
 
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function GlassNav() {
   }, []);
 
   const goTo = (id) => {
+    setMenuOpen(false);
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -88,30 +90,77 @@ export default function GlassNav() {
             </a>
           </nav>
 
-          <button
-            onClick={() => setOpen(true)}
-            data-testid="nav-cart-btn"
-            className="inline-flex items-center gap-2 rounded-full bg-charcoal text-ivory pl-3.5 pr-3 py-1.5 text-[13px] font-medium magnetic hover:-translate-y-0.5 transition-transform"
-          >
-            <ShoppingBag size={14} strokeWidth={1.75} />
-            <span className="hidden sm:inline">Cart</span>
-            <AnimatePresence>
-              {totals.count > 0 && (
-                <motion.span
-                  key={totals.count}
-                  initial={{ scale: 0.4, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.4, opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 24 }}
-                  className="ml-0.5 inline-flex items-center justify-center min-w-[20px] h-[20px] px-1.5 rounded-full bg-munchy text-ivory text-[10.5px] font-mono-spaced"
-                  data-testid="nav-cart-badge"
-                >
-                  {totals.count}
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setOpen(true)}
+              data-testid="nav-cart-btn"
+              className="inline-flex items-center gap-2 rounded-full bg-charcoal text-ivory pl-3.5 pr-3 py-1.5 text-[13px] font-medium magnetic hover:-translate-y-0.5 transition-transform"
+            >
+              <ShoppingBag size={14} strokeWidth={1.75} />
+              <span className="hidden sm:inline">Cart</span>
+              <AnimatePresence>
+                {totals.count > 0 && (
+                  <motion.span
+                    key={totals.count}
+                    initial={{ scale: 0.4, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.4, opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 24 }}
+                    className="ml-0.5 inline-flex items-center justify-center min-w-[20px] h-[20px] px-1.5 rounded-full bg-munchy text-ivory text-[10.5px] font-mono-spaced"
+                    data-testid="nav-cart-badge"
+                  >
+                    {totals.count}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              data-testid="nav-menu-toggle"
+              className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full bg-charcoal/5 text-charcoal hover:bg-charcoal/10 transition-colors"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <X size={18} strokeWidth={1.75} /> : <Menu size={18} strokeWidth={1.75} />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile dropdown menu */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.nav
+              key="mobile-menu"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden glass rounded-3xl mt-2 p-2 font-body overflow-hidden"
+              data-testid="nav-mobile-menu"
+            >
+              {links.map((l) => (
+                <button
+                  key={l.id}
+                  onClick={() => goTo(l.id)}
+                  data-testid={`nav-mobile-${l.id}-btn`}
+                  className="w-full text-left rounded-2xl px-4 py-3 text-[15px] text-charcoal/80 hover:bg-charcoal/8 hover:text-charcoal transition-colors"
+                >
+                  {l.label}
+                </button>
+              ))}
+              <a
+                href={`tel:${RESTAURANT.phone.replace(/\D/g, "")}`}
+                onClick={() => setMenuOpen(false)}
+                data-testid="nav-mobile-phone-link"
+                className="mt-1 flex items-center gap-2.5 rounded-2xl px-4 py-3 text-charcoal/80 hover:bg-charcoal/8 hover:text-charcoal transition-colors font-mono-spaced text-[14px] tracking-[0.02em]"
+              >
+                <Phone size={15} strokeWidth={1.75} />
+                {RESTAURANT.phone}
+              </a>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </div>
     </motion.header>
   );
