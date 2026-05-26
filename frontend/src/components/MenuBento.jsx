@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { Search } from "lucide-react";
 import { CATEGORIES, MENU } from "@/data/menu";
 
 const itemTags = (item) => {
@@ -181,10 +181,6 @@ export default function MenuBento({ onItemClick }) {
 }
 
 function CategoryBlock({ cat, items, index, onItemClick }) {
-  const [expanded, setExpanded] = useState(false);
-  const topItem = items.find((i) => i.featured) || items[0];
-  const restItems = items.filter((i) => i.id !== topItem.id);
-
   return (
     <div id={`cat-${cat.id}`} data-testid={`menu-cat-${cat.id}`} className="scroll-mt-44">
       <motion.div
@@ -211,175 +207,27 @@ function CategoryBlock({ cat, items, index, onItemClick }) {
             {cat.name}
           </h3>
           <p className="mt-2 text-charcoal/55 italic font-display text-xl md:text-2xl">{cat.tagline}</p>
-
-          {/* Learn more — top-left expander with animation */}
-          {restItems.length > 0 && (
-            <button
-              type="button"
-              onClick={() => setExpanded((v) => !v)}
-              data-testid={`cat-expand-${cat.id}`}
-              className="mt-5 md:mt-6 inline-flex items-center gap-3 group text-charcoal/70 hover:text-charcoal transition-colors"
-              aria-expanded={expanded}
-            >
-              <motion.span
-                animate={{ width: expanded ? 14 : 30 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="block h-px bg-current"
-                aria-hidden="true"
-              />
-              <span className="text-[11px] uppercase tracking-[0.24em] font-body font-medium">
-                {expanded ? "Close" : `Learn more · ${restItems.length} more`}
-              </span>
-              <motion.span
-                animate={{ rotate: expanded ? 180 : 0 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="inline-flex"
-                aria-hidden="true"
-              >
-                <ChevronDown size={14} strokeWidth={1.75} />
-              </motion.span>
-            </button>
-          )}
         </div>
         <span className="text-charcoal/40 text-sm font-mono-spaced hidden sm:block">
           {items.length} items
         </span>
       </motion.div>
 
-      {/* Top pick — full-width hero card, always visible */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-10%" }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <TopItemCard item={topItem} onClick={() => onItemClick(topItem)} accent={cat.hex} />
-      </motion.div>
-
-      {/* Rest — expand/collapse with stagger animation */}
-      <AnimatePresence initial={false}>
-        {expanded && restItems.length > 0 && (
-          <motion.div
-            key="rest"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-            data-testid={`cat-rest-${cat.id}`}
-          >
-            <div className="pt-5 md:pt-7">
-              <BentoGrid items={restItems} onItemClick={onItemClick} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-function TopItemCard({ item, onClick }) {
-  const tags = itemTags(item);
-  return (
-    <div className="card-3d-wrap w-full">
-      <button
-        type="button"
-        onClick={onClick}
-        data-testid={`menu-top-${item.id}`}
-        className="card-3d group relative block w-full text-left overflow-hidden rounded-[24px] md:rounded-[32px] aspect-[4/3] md:aspect-[21/9] bg-bone"
-        style={{
-          boxShadow:
-            "0 1px 2px rgba(20,10,6,0.04), 0 16px 40px -20px rgba(20,10,6,0.22)",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow =
-            "0 4px 8px rgba(20,10,6,0.06), 0 40px 70px -25px rgba(20,10,6,0.32)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow =
-            "0 1px 2px rgba(20,10,6,0.04), 0 16px 40px -20px rgba(20,10,6,0.22)";
-        }}
-      >
-        <motion.img
-          src={item.image}
-          alt={item.name}
-          loading="lazy"
-          draggable="false"
-          className="absolute inset-0 w-full h-full object-cover"
-          whileHover={{ scale: 1.04 }}
-          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-        <span className="card-3d-sheen rounded-[24px] md:rounded-[32px]" aria-hidden="true" />
-
-        {/* Badges top-left: Top pick + existing tags */}
-        <div className="absolute top-5 md:top-7 left-5 md:left-7 flex flex-wrap gap-2 max-w-[70%] z-[2]">
-          <span className="chip-dark rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-body font-medium">
-            Top pick
-          </span>
-          {tags.map((t) => (
-            <span
-              key={t.label}
-              className="rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-white font-body font-medium"
-              style={{ backgroundColor: `hsl(var(--${t.color}) / 0.95)` }}
-            >
-              {t.label}
-            </span>
-          ))}
-        </div>
-
-        {/* Price top-right */}
-        <div className="absolute top-5 md:top-7 right-5 md:right-7 chip-dark rounded-full px-3 py-1.5 text-[13px] font-mono-spaced z-[2]">
-          ${item.price.toFixed(2)}
-        </div>
-
-        {/* Hover affordance */}
-        <div className="absolute right-6 md:right-8 bottom-[120px] md:bottom-[140px] chip-dark rounded-full px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-body z-[2]">
-          Customize
-        </div>
-
-        {/* Bottom content — larger */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 z-[2]">
-          <h4 className="font-display text-ivory text-3xl sm:text-4xl md:text-5xl lg:text-[64px] tracking-[-0.015em] leading-[0.98] text-balance drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] max-w-3xl">
-            {item.name}
-          </h4>
-          <p className="mt-3 md:mt-4 text-ivory/85 text-sm md:text-base font-body max-w-xl drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)] line-clamp-2">
-            {item.description}
-          </p>
-        </div>
-      </button>
-    </div>
-  );
-}
-
-function BentoGrid({ items, onItemClick }) {
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6 auto-rows-[180px] md:auto-rows-[220px]">
-      {items.map((item, i) => {
-        const m = i % 6;
-        let span;
-        if (m === 0) span = "col-span-2 md:col-span-3 row-span-2";
-        else if (m === 1) span = "col-span-2 md:col-span-3 row-span-2";
-        else if (m === 2) span = "col-span-1 md:col-span-2 row-span-2";
-        else if (m === 3) span = "col-span-1 md:col-span-2 row-span-2";
-        else if (m === 4) span = "col-span-2 md:col-span-2 row-span-2";
-        else span = "col-span-2 md:col-span-4 row-span-2";
-
-        return (
+      {/* Uniform grid — all items as equal-sized boxes, always visible */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        {items.map((item, i) => (
           <motion.div
             key={item.id}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-5%" }}
             transition={{ duration: 0.7, delay: (i % 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
-            className={span}
+            className="aspect-[4/3]"
           >
-            <div className="h-full">
-              <ItemCardFull item={item} onClick={() => onItemClick(item)} />
-            </div>
+            <ItemCardFull item={item} onClick={() => onItemClick(item)} />
           </motion.div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 }
