@@ -14,12 +14,29 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+client = None
+db = None
 
-app = FastAPI(title="Munchy's Grill API")
-api_router = APIRouter(prefix="/api")
+
+def get_db():
+    global client, db
+    if db is not None:
+        return db
+
+    mongo_url = os.environ.get('MONGO_URL')
+    db_name = os.environ.get('DB_NAME')
+    if not mongo_url or not db_name:
+        raise HTTPException(
+            status_code=500,
+            detail="Database is not configured. Set MONGO_URL and DB_NAME.",
+        )
+
+    client = AsyncIOMotorClient(mongo_url)
+    db = client[db_name]
+    return db
+
+
+api_router = APIRouter()
 
 
 # ----- Models -----
@@ -92,24 +109,28 @@ async def create_order(payload: OrderCreate):
         raise HTTPException(status_code=400, detail="Cart is empty")
     order = Order(**payload.model_dump())
     doc = order.model_dump()
-    await db.orders.insert_one(doc)
+    database = get_db()
+    await database.orders.insert_one(doc)
     return order
 
 @api_router.get("/orders", response_model=List[Order])
 async def list_orders():
-    orders = await db.orders.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    database = get_db()
+    orders = await database.orders.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     return orders
 
 @api_router.get("/orders/{order_id}", response_model=Order)
 async def get_order(order_id: str):
-    order = await db.orders.find_one({"id": order_id}, {"_id": 0})
+    database = get_db()
+    order = await database.orders.find_one({"id": order_id}, {"_id": 0})
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
     return order
 
 @api_router.patch("/orders/{order_id}", response_model=Order)
 async def update_order_status(order_id: str, payload: OrderStatusUpdate):
-    result = await db.orders.find_one_and_update(
+    database = get_db()
+    result = await database.orders.find_one_and_update(
         {"id": order_id},
         {"$set": {"status": payload.status}},
         return_document=True,
@@ -122,28 +143,44 @@ async def update_order_status(order_id: str, payload: OrderStatusUpdate):
 @api_router.post("/contact", response_model=Contact)
 async def create_contact(payload: ContactCreate):
     contact = Contact(**payload.model_dump())
-    await db.contacts.insert_one(contact.model_dump())
+    database = get_db()
+    await database.contacts.insert_one(contact.model_dump())
     return contact
 
 @api_router.get("/contact", response_model=List[Contact])
 async def list_contacts():
-    contacts = await db.contacts.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    database = get_db()
+    contacts = await database.contacts.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     return contacts
 
 
-app.include_router(api_router)
+def create_app(include_unprefixed_api: bool = False):
+    application = FastAPI(title="Munchy's Grill API")
+    application.include_router(api_router, prefix="/api")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    # Vercel mounts Python functions under /api and may pass the stripped path
+    # to ASGI apps. Including unprefixed routes keeps /api/orders working on
+    # Vercel while preserving /api/orders for the standalone FastAPI server.
+    if include_unprefixed_api:
+        application.include_router(api_router)
+
+    application.add_middleware(
+        CORSMiddleware,
+        allow_credentials=True,
+        allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    return application
+
+
+app = create_app()
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    client.close()
+    if client is not None:
+        client.close()
