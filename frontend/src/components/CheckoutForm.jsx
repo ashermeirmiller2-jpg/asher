@@ -5,8 +5,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
 import { RESTAURANT } from "@/data/menu";
-
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+import { API } from "@/lib/api";
 
 export default function CheckoutForm() {
   const { checkoutOpen, setCheckoutOpen, items, totals, clear } = useCart();
