@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowDown, MapPin } from "lucide-react";
 import { RESTAURANT } from "@/data/menu";
 
@@ -11,11 +11,12 @@ const HERO_FOOD = RESTAURANT.banner;
 
 export default function HeroPinned() {
   const ref = useRef(null);
+  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
 
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1.0, 1.08]);
-  const headlineY = useTransform(scrollYProgress, [0, 1], ["0px", "-80px"]);
-  const headlineOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [1.0, 1.08]);
+  const headlineY = useTransform(scrollYProgress, [0, 1], reduce ? ["0px", "0px"] : ["0px", "-80px"]);
+  const headlineOpacity = useTransform(scrollYProgress, [0, 0.7], reduce ? [1, 1] : [1, 0]);
 
   const scrollToMenu = () => {
     const el = document.getElementById("menu");
@@ -125,6 +126,8 @@ export default function HeroPinned() {
               src={HERO_FOOD}
               alt="Munchy's signature schnitzel"
               className="absolute inset-0 w-full h-full object-cover"
+              decoding="async"
+              fetchPriority="high"
               draggable="false"
             />
             {/* Soft fade into the page on left edge */}
@@ -147,7 +150,7 @@ export default function HeroPinned() {
             Scroll
           </span>
           <motion.div
-            animate={{ y: [0, 6, 0] }}
+            animate={reduce ? undefined : { y: [0, 6, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             className="w-px h-7 bg-charcoal/30"
           />

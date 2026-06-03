@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 
 // Apple iPhone product-page style scroll scene.
@@ -34,15 +34,16 @@ const HALO_LAYERS = [
 
 export default function BurgerScrollScene({ onOrderClick }) {
   const ref = useRef(null);
+  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
 
-  // Continuous burger transforms (numeric, safe)
-  const rotate = useTransform(scrollYProgress, [0, 1], [-30, 380]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.7, 1.35, 1.05]);
-  const y = useTransform(scrollYProgress, [0, 0.5, 1], [40, -10, 30]);
+  // Continuous burger transforms (numeric, safe). Calmed for reduced-motion users.
+  const rotate = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [-30, 380]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], reduce ? [1, 1, 1] : [0.7, 1.35, 1.05]);
+  const y = useTransform(scrollYProgress, [0, 0.5, 1], reduce ? [0, 0, 0] : [40, -10, 30]);
   const haloScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.5, 1.6, 1.1]);
   const haloOpacityBase = useTransform(scrollYProgress, [0, 0.4, 0.8, 1], [0, 0.8, 0.6, 0.2]);
 
@@ -102,6 +103,7 @@ export default function BurgerScrollScene({ onOrderClick }) {
               src={BURGER_IMG}
               alt="Munchy's burger"
               className="w-full h-full object-cover"
+              decoding="async"
               draggable="false"
             />
             <div

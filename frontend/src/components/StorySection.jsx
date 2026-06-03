@@ -6,7 +6,7 @@ export default function StorySection() {
   return (
     <section
       id="story"
-      className="relative py-32 md:py-44 overflow-hidden"
+      className="relative py-32 md:py-44 overflow-hidden bg-charcoal text-ivory"
       data-testid="story-section"
       aria-label="Our Story"
     >
@@ -23,6 +23,8 @@ export default function StorySection() {
               src={RESTAURANT.banner}
               alt="Inside Munchy's Grill, Woodmere"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
               draggable="false"
             />
           </div>
@@ -45,15 +47,15 @@ export default function StorySection() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           className="md:col-span-7"
         >
-          <p className="text-charcoal/50 text-[11px] uppercase tracking-[0.32em] font-body mb-6">
+          <p className="text-gold text-[11px] uppercase tracking-[0.32em] font-body mb-6">
             The story
           </p>
-          <h2 className="font-display text-5xl md:text-7xl tracking-[-0.02em] leading-[0.96] text-balance">
+          <h2 className="font-display text-6xl md:text-8xl tracking-[-0.025em] leading-[0.9] text-balance">
             A neighborhood grill
             <br />
             in <span className="italic text-munchy">Woodmere</span>.
           </h2>
-          <div className="mt-8 md:mt-10 max-w-2xl space-y-5 text-charcoal/75 leading-relaxed font-body text-base md:text-lg">
+          <div className="mt-8 md:mt-10 max-w-2xl space-y-5 text-ivory/75 leading-relaxed font-body text-base md:text-lg">
             <p>
               Munchy's opened on Irving Place in 2018 with one rule: kosher food
               shouldn't compromise. Not on flavor, not on craft, not on the moment
@@ -76,8 +78,8 @@ export default function StorySection() {
               { k: "Open", v: "Late" },
             ].map((s) => (
               <div key={s.k}>
-                <p className="font-display text-3xl md:text-4xl">{s.v}</p>
-                <p className="text-charcoal/50 text-[10px] uppercase tracking-[0.28em] mt-1 font-body">
+                <p className="font-display text-4xl md:text-5xl text-ivory">{s.v}</p>
+                <p className="text-ivory/50 text-[10px] uppercase tracking-[0.28em] mt-1 font-body">
                   {s.k}
                 </p>
               </div>

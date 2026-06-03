@@ -1,0 +1,17 @@
+{
+  "short_name": "Munchy's",
+  "name": "Munchy's Grill — Woodmere, NY",
+  "description": "Kosher charcoal grill: schnitzel baguettes, hand-formed burgers, shawarma off the spit.",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#C72D3C",
+  "background_color": "#F2ECDF"
+}

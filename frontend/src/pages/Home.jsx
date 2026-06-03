@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import GlassNav from "@/components/GlassNav";
 import HeroPinned from "@/components/HeroPinned";
+import Marquee from "@/components/Marquee";
 import FeaturedRail from "@/components/FeaturedRail";
 import StorySection from "@/components/StorySection";
 import MenuBento from "@/components/MenuBento";
@@ -25,6 +26,7 @@ export default function Home() {
     <main className="relative min-h-screen bg-ivory text-charcoal" data-testid="home-page">
       <GlassNav />
       <HeroPinned />
+      <Marquee />
       <MenuBento onItemClick={(it) => setActiveItem(it)} />
       <FeaturedRail onItemClick={(it) => setActiveItem(it)} />
       <StorySection />

@@ -40,7 +40,11 @@ export default function GlassNav() {
         } px-5`}
       >
         <div
-          className={`glass rounded-full px-4 md:px-6 flex items-center justify-between transition-all duration-500 ${
+          className={`${
+            scrolled
+              ? "glass-strong shadow-[0_14px_34px_-16px_rgba(20,10,6,0.38)]"
+              : "glass"
+          } rounded-full px-4 md:px-6 flex items-center justify-between transition-all duration-500 ${
             scrolled ? "py-2" : "py-2.5"
           }`}
         >
@@ -57,7 +61,7 @@ export default function GlassNav() {
                 draggable="false"
               />
             </span>
-            <span className="font-display text-[20px] tracking-[-0.01em] leading-none hidden sm:flex items-baseline">
+            <span className="font-display text-[22px] tracking-[-0.01em] leading-none hidden sm:flex items-baseline">
               <span className="text-charcoal">Munchy</span>
               <span className="italic text-munchy ml-[1px]">'s</span>
             </span>
@@ -85,6 +89,15 @@ export default function GlassNav() {
               className="link-underline text-charcoal/70 hover:text-charcoal font-mono-spaced text-[12.5px] tracking-[0.02em] px-2"
             >
               {RESTAURANT.phone}
+            </a>
+            <a
+              href={RESTAURANT.toastUrl}
+              target="_blank"
+              rel="noreferrer"
+              data-testid="nav-order-link"
+              className="ml-1 inline-flex items-center rounded-full bg-munchy/10 text-munchy hover:bg-munchy hover:text-ivory transition-colors px-3.5 py-1.5 text-[12.5px] font-medium"
+            >
+              Order
             </a>
           </nav>
 
